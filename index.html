@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,72 +8,82 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
-        
+
         :root {
             --primary: #016dff;
             --secondary: #ff9595;
             --accent: #bbd162;
         }
-        
+
         body {
             font-family: 'Avenir Next LT Pro', 'Montserrat', sans-serif;
             background-color: #f8fafc;
+            /* Apply default lowercase to body, but allow overrides */
             text-transform: lowercase;
             font-weight: 700;
         }
-        
-        h1, h2, h3, h4, h5, h6, p, span, button, input, select, textarea, label, div {
+
+        /* Apply lowercase specifically to static text elements */
+        h1, h2, h3, h4, h5, h6, p, span, button, label, div.material-card h4, div.flyer-type-card h4, .marketing-note p, .success-message p, .loading-overlay p, label {
             text-transform: lowercase;
             font-family: 'Avenir Next LT Pro', 'Montserrat', sans-serif;
             font-weight: 700;
         }
-        
+
+        /* Ensure inputs, selects, and textareas DO NOT force lowercase */
+        input, select, textarea {
+            font-family: 'Avenir Next LT Pro', 'Montserrat', sans-serif;
+            font-weight: 700;
+            /* text-transform: none; /* Explicitly prevent lowercase transform if needed, but excluding from the rule above is usually enough */
+        }
+
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary:hover {
             background-color: #0055cc;
         }
-        
+
         .btn-secondary {
             background-color: var(--secondary);
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .btn-secondary:hover {
             background-color: #ff7070;
         }
-        
+
         .btn-accent {
             background-color: var(--accent);
             color: #333;
             transition: all 0.3s ease;
         }
-        
+
         .btn-accent:hover {
             background-color: #a9c046;
         }
-        
+
         .material-card {
             border: 2px solid transparent;
             transition: all 0.3s ease;
             cursor: pointer;
         }
-        
+
         .material-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .material-card.selected {
             border-color: var(--primary);
             background-color: rgba(1, 109, 255, 0.05);
         }
-        
+
         .step-indicator {
             width: 30px;
             height: 30px;
@@ -86,68 +95,69 @@
             justify-content: center;
             font-weight: bold;
         }
-        
+
         .step-indicator.active {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .step-indicator.completed {
             background-color: var(--accent);
             color: #333;
         }
-        
+
         .step-line {
             flex-grow: 1;
             height: 2px;
             background-color: #e2e8f0;
         }
-        
+
         .step-line.active {
             background-color: var(--accent);
         }
-        
+
         input:focus, textarea:focus, select:focus {
             outline: 2px solid var(--primary);
             border-color: transparent;
+            box-shadow: none; /* Added to prevent potential Tailwind focus ring conflicts */
         }
-        
+
         .flyer-type-card {
             border: 2px solid transparent;
             transition: all 0.3s ease;
             cursor: pointer;
         }
-        
+
         .flyer-type-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .flyer-type-card.selected {
             border-color: var(--primary);
             background-color: rgba(1, 109, 255, 0.05);
         }
-        
+
         .review-label {
             color: var(--primary);
             font-weight: 600;
         }
-        
+
         .section-title {
             text-decoration: underline;
             text-underline-offset: 4px;
         }
-        
+
         .radio-container {
             display: flex;
             align-items: center;
             margin-right: 1rem;
         }
-        
+
         .radio-container input[type="radio"] {
             margin-right: 0.5rem;
         }
-        
+
         .form-section-title {
             font-weight: 700;
             color: #4a5568;
@@ -155,18 +165,18 @@
             border-bottom: 1px solid #e2e8f0;
             padding-bottom: 0.5rem;
         }
-        
+
         .checkbox-container {
             display: flex;
             align-items: center;
             margin-right: 1rem;
             margin-bottom: 0.5rem;
         }
-        
+
         .checkbox-container input[type="checkbox"] {
             margin-right: 0.5rem;
         }
-        
+
         .product-description {
             background-color: #f0f7ff;
             border-left: 4px solid var(--primary);
@@ -174,7 +184,7 @@
             margin-bottom: 1.5rem;
             border-radius: 0.25rem;
         }
-        
+
         .marketing-note {
             background-color: #f0f9eb;
             border-left: 4px solid var(--accent);
@@ -183,7 +193,7 @@
             border-radius: 0.25rem;
             font-size: 0.9rem;
         }
-        
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -197,7 +207,7 @@
             justify-content: center;
             z-index: 1000;
         }
-        
+
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             width: 36px;
@@ -207,7 +217,7 @@
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
         }
-        
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -221,11 +231,10 @@
 <body>
     <div class="container mx-auto px-4 py-8 max-w-5xl">
         <header class="text-center mb-8">
-            <!-- Company Name -->
             <h1 class="text-5xl md:text-6xl font-bold mb-4" style="color: var(--primary);">arhome realty</h1>
             <h2 class="text-xl md:text-2xl font-semibold" style="color: var(--secondary);">marketing materials request</h2>
         </header>
-        
+
         <div class="flex items-center justify-between mb-10 px-4">
             <div class="step-indicator active" id="step1-indicator">1</div>
             <div class="step-line" id="line1"></div>
@@ -233,13 +242,11 @@
             <div class="step-line" id="line2"></div>
             <div class="step-indicator" id="step3-indicator">3</div>
         </div>
-        
-        <!-- Step 1: Select Material Type -->
+
         <div id="step1" class="step-content">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 1: select marketing material type</h3>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Marketing Flyer -->
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="flyer" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -248,11 +255,10 @@
                     </div>
                     <h4 class="font-semibold text-center">marketing flyers</h4>
                 </div>
-                
-                <!-- Listing Brochure -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="listingbrochure" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
                             <rect x="6" y="3" width="12" height="18" rx="1" />
                             <path d="M12 3 L12 21" />
                             <path d="M9 7 L11 7" />
@@ -265,8 +271,7 @@
                     </div>
                     <h4 class="font-semibold text-center">listing brochures</h4>
                 </div>
-                
-                <!-- Business Card -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="businesscard" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -275,9 +280,8 @@
                     </div>
                     <h4 class="font-semibold text-center">business cards</h4>
                 </div>
-                
-                <!-- Door Hanger -->
-                <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="doorhanger" onclick="selectMaterial(this)">
+
+                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="doorhanger" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
                             <rect x="7" y="4" width="10" height="16" rx="1" />
@@ -289,8 +293,7 @@
                     </div>
                     <h4 class="font-semibold text-center">door hangers</h4>
                 </div>
-                
-                <!-- For Sale Sign -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="forsalesign" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -302,8 +305,7 @@
                     </div>
                     <h4 class="font-semibold text-center">for sale signs</h4>
                 </div>
-                
-                <!-- Rider -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="rider" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -313,18 +315,16 @@
                     </div>
                     <h4 class="font-semibold text-center">riders</h4>
                 </div>
-                
-                <!-- Name Tag -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="nametag" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                         </svg>
                     </div>
                     <h4 class="font-semibold text-center">name tags</h4>
                 </div>
-                
-                <!-- Pen -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="pen" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -333,8 +333,7 @@
                     </div>
                     <h4 class="font-semibold text-center">pens</h4>
                 </div>
-                
-                <!-- Folder -->
+
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="folder" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -344,16 +343,11 @@
                     <h4 class="font-semibold text-center">folders</h4>
                 </div>
             </div>
-            
-            <div class="mt-8 text-center">
-                <button id="step1-continue" class="btn-primary px-6 py-2 rounded-lg font-semibold" onclick="continueToStep2()">continue</button>
             </div>
-        </div>
-        
-        <!-- Step 2: Choose Flyer Type (Only for Marketing Flyer) -->
+
         <div id="flyer-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: choose your flyer type</h3>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-listed" onclick="selectFlyerType(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
@@ -364,11 +358,11 @@
                     </div>
                     <h4 class="font-semibold text-center">just listed</h4>
                 </div>
-                
+
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-sold" onclick="selectFlyerType(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                             <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             <circle cx="17" cy="7" r="3" fill="white" stroke="currentColor" />
                             <path d="M15.5 7L16.5 8L18.5 6" stroke-width="1.5" />
                         </svg>
@@ -376,29 +370,27 @@
                     <h4 class="font-semibold text-center">just sold</h4>
                 </div>
             </div>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="flyer-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
-                <button id="flyer-step2-continue" class="btn-primary px-6 py-2 rounded-lg font-semibold" onclick="continueToFlyerStep3()">continue</button>
-            </div>
+                 </div>
         </div>
-        
-        <!-- Step 3: Flyer Information (Only for Marketing Flyer) -->
+
         <div id="flyer-step3" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 3: flyer info</h3>
-            
+
             <form id="flyer-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="flyer-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="flyer-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">listing address</label>
-                        <input type="text" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="flyer-listingAddress" class="block mb-2 font-semibold text-gray-700">listing address</label>
+                        <input type="text" id="flyer-listingAddress" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
                     <label class="block mb-2 font-semibold text-gray-700">use your headshot?</label>
                     <div class="flex">
@@ -412,24 +404,24 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">text for flyer</label>
-                    <textarea name="flyerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea>
+                    <label for="flyer-flyerText" class="block mb-2 font-semibold text-gray-700">text for flyer</label>
+                    <textarea id="flyer-flyerText" name="flyerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">preferred size</label>
-                        <select name="preferredSize" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="flyer-preferredSize" class="block mb-2 font-semibold text-gray-700">preferred size</label>
+                        <select id="flyer-preferredSize" name="preferredSize" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="6.5x8">6.5" x 8"</option>
                             <option value="6.5x9">6.5" x 9"</option>
                             <option value="8.5x11">8.5" x 11"</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity needed</label>
-                        <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="flyer-quantity" class="block mb-2 font-semibold text-gray-700">quantity needed</label>
+                        <select id="flyer-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="250">250</option>
@@ -438,7 +430,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
                     <label class="block mb-2 font-semibold text-gray-700">would you like to send these through eddm?</label>
                     <div class="flex">
@@ -452,41 +444,40 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="eddm-zip-container" class="mt-6 hidden">
-                    <label class="block mb-2 font-semibold text-gray-700">zip code for eddm</label>
-                    <input type="text" name="eddmZip" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <label for="flyer-eddmZip" class="block mb-2 font-semibold text-gray-700">zip code for eddm</label>
+                    <input type="text" id="flyer-eddmZip" name="eddmZip" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="flyer-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="flyer-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="flyer">
                 <input type="hidden" name="flyerType" id="flyer-type-input">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="flyer-step3-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToFlyerStep2()">back</button>
                 <button id="flyer-step3-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitFlyerForm()">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Listing Brochure Information -->
+
         <div id="listingbrochure-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: listing brochure details</h3>
-            
+
             <form id="listingbrochure-form" class="bg-white p-6 rounded-lg shadow-md">
-                <h4 class="form-section-title">agent information</h4>
+                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="brochure-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="brochure-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
                         <label class="block mb-2 font-semibold text-gray-700">use your headshot?</label>
@@ -502,16 +493,16 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <h4 class="form-section-title mt-6">property information</h4>
                 <div>
-                    <label class="block mb-2 font-semibold text-gray-700">listing address</label>
-                    <input type="text" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                    <label for="brochure-listingAddress" class="block mb-2 font-semibold text-gray-700">listing address</label>
+                    <input type="text" id="brochure-listingAddress" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity needed</label>
+                        <label for="brochure-quantity" class="block mb-2 font-semibold text-gray-700">quantity needed</label>
                         <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" id="brochure-quantity" required>
                             <option value="15">15</option>
                             <option value="16">16</option>
@@ -526,46 +517,45 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="brochure-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="brochure-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="listingbrochure">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="listingbrochure-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="listingbrochure-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('listingbrochure-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Business Card Information -->
+
         <div id="businesscard-step2" class="step-content hidden">
-            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: business card details</h3>
-            
+             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: business card details</h3>
+
             <form id="businesscard-form" class="bg-white p-6 rounded-lg shadow-md">
                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="card-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="card-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">email address</label>
-                        <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="card-email" class="block mb-2 font-semibold text-gray-700">email address</label>
+                        <input type="email" id="card-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">phone number</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="card-phone" class="block mb-2 font-semibold text-gray-700">phone number</label>
+                        <input type="tel" id="card-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
                         <label class="block mb-2 font-semibold text-gray-700">use your headshot?</label>
@@ -581,19 +571,19 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <h4 class="form-section-title mt-6">card specifications</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">material</label>
-                        <select name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="card-material" class="block mb-2 font-semibold text-gray-700">material</label>
+                        <select id="card-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="14pt">14 pt uv gloss coated front</option>
                             <option value="16pt">16 pt uv gloss coated front</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity</label>
-                        <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="card-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
+                        <select id="card-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="250">250</option>
@@ -604,46 +594,45 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="card-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="card-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="businesscard">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="businesscard-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="businesscard-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('businesscard-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Door Hanger Information -->
+
         <div id="doorhanger-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: door hanger details</h3>
-            
+
             <form id="doorhanger-form" class="bg-white p-6 rounded-lg shadow-md">
                 <h4 class="form-section-title">agent information</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="doorhanger-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="doorhanger-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">email address</label>
-                        <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="doorhanger-email" class="block mb-2 font-semibold text-gray-700">email address</label>
+                        <input type="email" id="doorhanger-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">phone number</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="doorhanger-phone" class="block mb-2 font-semibold text-gray-700">phone number</label>
+                        <input type="tel" id="doorhanger-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
                         <label class="block mb-2 font-semibold text-gray-700">use your headshot?</label>
@@ -659,17 +648,17 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <h4 class="form-section-title mt-6">door hanger specifications</h4>
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">your text for door hanger</label>
-                    <textarea name="doorhangerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea>
+                    <label for="doorhanger-doorhangerText" class="block mb-2 font-semibold text-gray-700">your text for door hanger</label>
+                    <textarea id="doorhanger-doorhangerText" name="doorhangerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity</label>
-                        <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="doorhanger-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
+                        <select id="doorhanger-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="250">250</option>
@@ -678,59 +667,58 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">material</label>
-                        <select name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="doorhanger-material" class="block mb-2 font-semibold text-gray-700">material</label>
+                        <select id="doorhanger-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="14pt">14 pt uv gloss coated</option>
                             <option value="16pt">16 pt uv gloss coated</option>
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="doorhanger-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="doorhanger-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="doorhanger">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="doorhanger-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="doorhanger-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('doorhanger-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: For Sale Sign Information -->
+
         <div id="forsalesign-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: for sale sign details</h3>
-            
+
             <form id="forsalesign-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="product-description">
-                    <p>Real Estate Hanging Sign Panel With Grommets, 24 Ga Steel 30"H X 24"W.</p>
+                    <p>real estate hanging sign panel with grommets, 24 ga steel 30"h x 24"w.</p>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="forsalesign-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="forsalesign-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">phone number</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="forsalesign-phone" class="block mb-2 font-semibold text-gray-700">phone number</label>
+                        <input type="tel" id="forsalesign-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">email address</label>
-                        <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="forsalesign-email" class="block mb-2 font-semibold text-gray-700">email address</label>
+                        <input type="email" id="forsalesign-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
+                        <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
                         <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" id="forsalesign-quantity" required>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -745,53 +733,52 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="forsalesign-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="forsalesign-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="forsalesign">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="forsalesign-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="forsalesign-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('forsalesign-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Rider Information -->
+
         <div id="rider-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: rider details</h3>
-            
+
             <form id="rider-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="product-description">
-                    <p>Real Estate Sign Rider, 24 Ga Steel 6"H X 24"W. Sign rider is powder coated for a smooth finish and has rounded corners. Hardware is included.</p>
+                    <p>real estate sign rider, 24 ga steel 6"h x 24"w. sign rider is powder coated for a smooth finish and has rounded corners. hardware is included.</p>
                 </div>
-                
+
                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="rider-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="rider-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">phone number</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="rider-phone" class="block mb-2 font-semibold text-gray-700">phone number</label>
+                        <input type="tel" id="rider-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">rider text</label>
-                    <textarea name="riderText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24" required></textarea>
+                    <label for="rider-riderText" class="block mb-2 font-semibold text-gray-700">rider text</label>
+                    <textarea id="rider-riderText" name="riderText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24" required></textarea>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
+                    <label for="rider-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
                     <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" id="rider-quantity" required>
                         <option value="3">3</option>
                         <option value="4">4</option>
@@ -805,52 +792,51 @@
                         <option value="20">20</option>
                     </select>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="rider-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="rider-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="rider">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="rider-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="rider-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('rider-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Name Tag Information -->
+
         <div id="nametag-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: name tag details</h3>
-            
+
             <form id="nametag-form" class="bg-white p-6 rounded-lg shadow-md">
-                <h4 class="form-section-title">agent information</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <h4 class="form-section-title">agent information</h4>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">full name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="nametag-fullName" class="block mb-2 font-semibold text-gray-700">full name</label>
+                        <input type="text" id="nametag-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">titles/certifications</label>
-                        <input type="text" name="titles" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="nametag-titles" class="block mb-2 font-semibold text-gray-700">titles/certifications</label>
+                        <input type="text" id="nametag-titles" name="titles" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">color</label>
-                        <select name="color" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="nametag-color" class="block mb-2 font-semibold text-gray-700">color</label>
+                        <select id="nametag-color" name="color" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                             <option value="blue">blue</option>
                             <option value="white">white</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">quantity</label>
+                        <label for="nametag-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
                         <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" id="nametag-quantity" required>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -865,142 +851,141 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="nametag-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="nametag-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="nametag">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="nametag-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="nametag-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('nametag-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Pen Information -->
+
         <div id="pen-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: pen details</h3>
-            
+
             <form id="pen-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="pen-fullName" class="block mb-2 font-semibold text-gray-700">agent name</label>
+                        <input type="text" id="pen-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent phone</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="pen-phone" class="block mb-2 font-semibold text-gray-700">agent phone</label>
+                        <input type="tel" id="pen-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">choose what you want on the pen</label>
-                    <div class="flex flex-wrap">
+                    <label class="block mb-2 font-semibold text-gray-700">choose what you want on the pen (at least one required)</label>
+                     <div class="flex flex-wrap">
                         <div class="checkbox-container">
-                            <input type="checkbox" id="pen-logo" name="penOptions" value="logo">
+                            <input type="checkbox" id="pen-logo" name="penOptions" value="logo" onclick="validatePenOptions()">
                             <label for="pen-logo">arhome logo</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="pen-name" name="penOptions" value="name">
+                            <input type="checkbox" id="pen-name" name="penOptions" value="name" onclick="validatePenOptions()">
                             <label for="pen-name">your name</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="pen-phone" name="penOptions" value="phone">
+                            <input type="checkbox" id="pen-phone" name="penOptions" value="phone" onclick="validatePenOptions()">
                             <label for="pen-phone">phone number</label>
                         </div>
                     </div>
+                    <input type="text" id="pen-options-validation" required style="opacity: 0; position: absolute; pointer-events: none; height: 0; width: 0;">
                 </div>
-                
+
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">quantity</label>
-                    <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                    <label for="pen-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
+                    <select id="pen-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="150">150</option>
                     </select>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="pen-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="pen-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="pen">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="pen-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="pen-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('pen-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Step 2: Folder Information -->
+
         <div id="folder-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: folder details</h3>
-            
+
             <form id="folder-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent name</label>
-                        <input type="text" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="folder-fullName" class="block mb-2 font-semibold text-gray-700">agent name</label>
+                        <input type="text" id="folder-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent phone</label>
-                        <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="folder-phone" class="block mb-2 font-semibold text-gray-700">agent phone</label>
+                        <input type="tel" id="folder-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent email</label>
-                        <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                        <label for="folder-email" class="block mb-2 font-semibold text-gray-700">agent email</label>
+                        <input type="email" id="folder-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-semibold text-gray-700">agent website (if you have one)</label>
-                        <input type="url" name="website" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <label for="folder-website" class="block mb-2 font-semibold text-gray-700">agent website (if you have one)</label>
+                        <input type="url" id="folder-website" name="website" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                     </div>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">quantity</label>
-                    <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                    <label for="folder-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
+                    <select id="folder-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                     </select>
                 </div>
-                
+
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">additional instructions</label>
-                    <textarea name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
+                    <label for="folder-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label>
+                    <textarea id="folder-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                 </div>
-                
+
                 <div class="marketing-note mt-6">
                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
-                
+
                 <input type="hidden" name="materialType" value="folder">
             </form>
-            
+
             <div class="flex justify-between mt-8">
                 <button id="folder-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
                 <button id="folder-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('folder-form')">submit request</button>
             </div>
         </div>
-        
-        <!-- Success Message -->
+
         <div id="success-message" class="step-content hidden">
             <div class="bg-white p-8 rounded-lg shadow-md text-center">
                 <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6">
@@ -1008,15 +993,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                
+
                 <h3 class="text-2xl font-bold mb-4" style="color: var(--primary);">thank you!</h3>
                 <p class="text-gray-600 mb-6">your request has been submitted and our marketing concierge™ will contact you shortly!</p>
-                
+
                 <button id="new-request-button" class="btn-primary px-6 py-2 rounded-lg font-semibold" onclick="startNewRequest()">submit another request</button>
             </div>
         </div>
-        
-        <!-- Loading Overlay -->
+
         <div id="loading-overlay" class="loading-overlay hidden">
             <div class="spinner"></div>
             <p class="text-gray-700 font-semibold">submitting your request...</p>
@@ -1026,260 +1010,341 @@
     <script>
         // Initialize EmailJS
         document.addEventListener('DOMContentLoaded', function() {
-            emailjs.init("uyWq42dx6HhjQJdpg"); // EmailJS user ID
+            // IMPORTANT: Replace with your actual EmailJS User ID
+            emailjs.init("uyWq42dx6HhjQJdpg");
+            // Add event listeners for labels to focus corresponding inputs for accessibility/UX
+            document.querySelectorAll('label[for]').forEach(label => {
+                label.addEventListener('click', function() {
+                    const inputId = this.getAttribute('for');
+                    const inputElement = document.getElementById(inputId);
+                    if (inputElement) {
+                        inputElement.focus();
+                    }
+                });
+            });
         });
-        
+
         // Variables to store selections
         let selectedMaterial = null;
         let selectedFlyerType = null;
-        
-        // Function to select material
+
+        // Function to select material AND proceed to the next step
         function selectMaterial(card) {
             // Remove selected class from all cards
             const materialCards = document.querySelectorAll('.material-card');
             materialCards.forEach(c => c.classList.remove('selected'));
-            
+
             // Add selected class to clicked card
             card.classList.add('selected');
-            
+
             // Store selected material
             selectedMaterial = card.getAttribute('data-material');
-        }
-        
-        // Function to continue to step 2
-        function continueToStep2() {
+
+            // --- Logic from continueToStep2 is now here ---
             if (!selectedMaterial) {
-                alert('Please select a marketing material type.');
+                 // This should technically not happen if called via click, but good practice
+                console.error('Material selection failed.');
                 return;
             }
-            
+
             // Hide step 1
             document.getElementById('step1').classList.add('hidden');
-            
-            // Update step indicators
+
+            // Update step indicators for step 2
             document.getElementById('step1-indicator').classList.remove('active');
             document.getElementById('step1-indicator').classList.add('completed');
             document.getElementById('step2-indicator').classList.add('active');
             document.getElementById('line1').classList.add('active');
-            
+
+            // Ensure step 3 indicators are reset if coming back
+            document.getElementById('step3-indicator').classList.remove('active');
+            document.getElementById('line2').classList.remove('active');
+
+
             // Show appropriate step 2 based on selection
             if (selectedMaterial === 'flyer') {
                 document.getElementById('flyer-step2').classList.remove('hidden');
+                // Reset flyer type selection when returning
+                selectedFlyerType = null;
+                document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
+
             } else {
+                // Hide flyer-specific steps just in case
+                document.getElementById('flyer-step2').classList.add('hidden');
+                document.getElementById('flyer-step3').classList.add('hidden');
+                // Show the correct form step
                 document.getElementById(`${selectedMaterial}-step2`).classList.remove('hidden');
+                 // Only 2 steps visually for non-flyer items
+                document.getElementById('step3-indicator').classList.remove('active', 'completed');
+                document.getElementById('line2').classList.remove('active');
             }
         }
-        
+
         // Function to go back to step 1
         function backToStep1() {
-            // Hide current step
-            if (selectedMaterial === 'flyer') {
-                document.getElementById('flyer-step2').classList.add('hidden');
-            } else {
-                document.getElementById(`${selectedMaterial}-step2`).classList.add('hidden');
-            }
-            
-            // Update step indicators
-            document.getElementById('step2-indicator').classList.remove('active');
-            document.getElementById('step1-indicator').classList.remove('completed');
+             // Hide all possible step 2/3 divs
+             document.querySelectorAll('.step-content').forEach(el => {
+                if (el.id !== 'step1' && el.id !== 'success-message') { // Keep step 1 and success hidden/shown status
+                   el.classList.add('hidden');
+                }
+            });
+
+            // Reset Step 1 indicators
             document.getElementById('step1-indicator').classList.add('active');
+            document.getElementById('step1-indicator').classList.remove('completed');
+            // Reset Step 2 indicators
+            document.getElementById('step2-indicator').classList.remove('active', 'completed');
             document.getElementById('line1').classList.remove('active');
-            
+            // Reset Step 3 indicators
+            document.getElementById('step3-indicator').classList.remove('active', 'completed');
+            document.getElementById('line2').classList.remove('active');
+
             // Show step 1
             document.getElementById('step1').classList.remove('hidden');
+
+            // Clear selections
+            selectedMaterial = null;
+            selectedFlyerType = null;
+            document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
+
         }
-        
-        // Function to select flyer type
+
+        // Function to select flyer type AND proceed to step 3
         function selectFlyerType(card) {
-            // Remove selected class from all cards
+            // Remove selected class from all flyer type cards
             const flyerTypeCards = document.querySelectorAll('.flyer-type-card');
             flyerTypeCards.forEach(c => c.classList.remove('selected'));
-            
+
             // Add selected class to clicked card
             card.classList.add('selected');
-            
+
             // Store selected flyer type
             selectedFlyerType = card.getAttribute('data-flyer-type');
-        }
-        
-        // Function to continue to flyer step 3
-        function continueToFlyerStep3() {
-            if (!selectedFlyerType) {
-                alert('Please select a flyer type.');
+
+            // --- Logic from continueToFlyerStep3 is now here ---
+             if (!selectedFlyerType) {
+                // Should not happen on click
+                console.error("Flyer type not selected");
                 return;
             }
-            
-            // Set the flyer type in the hidden input
+
+            // Set the flyer type in the hidden input of the flyer form
             document.getElementById('flyer-type-input').value = selectedFlyerType;
-            
-            // Hide step 2
+
+            // Hide step 2 (flyer type selection)
             document.getElementById('flyer-step2').classList.add('hidden');
-            
-            // Update step indicators
+
+            // Update step indicators for step 3
             document.getElementById('step2-indicator').classList.remove('active');
             document.getElementById('step2-indicator').classList.add('completed');
             document.getElementById('step3-indicator').classList.add('active');
             document.getElementById('line2').classList.add('active');
-            
-            // Show step 3
+
+            // Show step 3 (flyer details form)
             document.getElementById('flyer-step3').classList.remove('hidden');
         }
-        
-        // Function to go back to flyer step 2
+
+        // Function to go back to flyer step 2 (type selection)
         function backToFlyerStep2() {
-            // Hide step 3
+            // Hide step 3 (flyer details)
             document.getElementById('flyer-step3').classList.add('hidden');
-            
-            // Update step indicators
+
+            // Update step indicators back to step 2
             document.getElementById('step3-indicator').classList.remove('active');
-            document.getElementById('step2-indicator').classList.remove('completed');
             document.getElementById('step2-indicator').classList.add('active');
+            document.getElementById('step2-indicator').classList.remove('completed');
             document.getElementById('line2').classList.remove('active');
-            
-            // Show step 2
+
+            // Show step 2 (flyer type selection)
             document.getElementById('flyer-step2').classList.remove('hidden');
+
+            // Clear flyer type selection
+            selectedFlyerType = null;
+            document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('flyer-type-input').value = ''; // Clear hidden input too
         }
-        
-        // Function to toggle EDDM zip code field
+
+        // Function to toggle EDDM zip code field visibility
         function toggleEddmZip() {
             const eddmYes = document.getElementById('eddm-yes');
             const eddmZipContainer = document.getElementById('eddm-zip-container');
-            
+            const eddmZipInput = document.getElementById('flyer-eddmZip'); // Get the input element
+
             if (eddmYes.checked) {
                 eddmZipContainer.classList.remove('hidden');
+                eddmZipInput.required = true; // Make required only when visible
             } else {
                 eddmZipContainer.classList.add('hidden');
+                eddmZipInput.required = false; // Make not required when hidden
+                eddmZipInput.value = ''; // Clear value when hidden
             }
         }
-        
-        // Function to submit flyer form
+
+        // Function to handle Pen options checkbox validation (at least one must be checked)
+        function validatePenOptions() {
+            const checkboxes = document.querySelectorAll('input[name="penOptions"]:checked');
+            const validationInput = document.getElementById('pen-options-validation');
+            if (checkboxes.length > 0) {
+                validationInput.value = 'valid'; // Set a value to pass 'required'
+                validationInput.setCustomValidity(''); // Clear custom validity
+            } else {
+                validationInput.value = ''; // Clear value to fail 'required'
+                validationInput.setCustomValidity('please select at least one option for the pen.'); // Set custom message
+            }
+        }
+
+
+        // Function to submit flyer form (specific steps)
         function submitFlyerForm() {
             const form = document.getElementById('flyer-form');
             if (!form.checkValidity()) {
-                form.reportValidity();
+                form.reportValidity(); // Show browser validation messages
                 return;
             }
-            
-            // Show loading overlay
-            document.getElementById('loading-overlay').classList.remove('hidden');
-            
+
+            showLoadingOverlay();
+
             // Get form data
             const formData = new FormData(form);
             const templateParams = {};
-            
+
             // Convert FormData to object
             for (let [key, value] of formData.entries()) {
                 templateParams[key] = value;
             }
-            
-            // Add flyer type
-            templateParams.flyerType = selectedFlyerType;
-            
-            // Send email using EmailJS
-            emailjs.send('default_service', 'marketing_request', templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    
-                    // Hide loading overlay
-                    document.getElementById('loading-overlay').classList.add('hidden');
-                    
-                    // Hide step 3
-                    document.getElementById('flyer-step3').classList.add('hidden');
-                    
-                    // Show success message
-                    document.getElementById('success-message').classList.remove('hidden');
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    
-                    // Hide loading overlay
-                    document.getElementById('loading-overlay').classList.add('hidden');
-                    
-                    alert('There was an error submitting your request. Please try again.');
-                });
+            // Ensure flyerType is included (already set in hidden input)
+
+             sendEmail(templateParams, 'flyer-step3'); // Pass the ID of the current step div
         }
-        
-        // Function to submit other forms
+
+        // Function to submit other forms (generic step 2)
         function submitForm(formId) {
             const form = document.getElementById(formId);
+
+            // Special validation for pen options
+            if (formId === 'pen-form') {
+                validatePenOptions(); // Ensure validation runs before checkValidity
+            }
+
+
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
-            
-            // Show loading overlay
-            document.getElementById('loading-overlay').classList.remove('hidden');
-            
+
+            showLoadingOverlay();
+
             // Get form data
             const formData = new FormData(form);
             const templateParams = {};
-            
+            const penOptions = []; // Specific handling for pen checkboxes
+
             // Convert FormData to object
             for (let [key, value] of formData.entries()) {
-                if (key === 'penOptions') {
-                    if (!templateParams[key]) {
-                        templateParams[key] = [];
-                    }
-                    templateParams[key].push(value);
+                 if (key === 'penOptions') {
+                    penOptions.push(value); // Collect pen options
                 } else {
                     templateParams[key] = value;
                 }
             }
-            
-            // Send email using EmailJS
-            emailjs.send('default_service', 'marketing_request', templateParams)
+
+            // Add collected pen options as a comma-separated string (or keep as array if template handles it)
+             if (penOptions.length > 0) {
+                templateParams['penOptions'] = penOptions.join(', ');
+            }
+
+            sendEmail(templateParams, formId.replace('-form', '-step2')); // Pass the ID of the current step div
+        }
+
+        // Generic function to send email via EmailJS
+        function sendEmail(templateParams, currentStepId) {
+             // IMPORTANT: Replace with your actual EmailJS Service ID and Template ID
+            const serviceID = 'default_service'; // Replace if needed
+            const templateID = 'marketing_request'; // Replace with your template ID
+
+             emailjs.send(serviceID, templateID, templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-                    
-                    // Hide loading overlay
-                    document.getElementById('loading-overlay').classList.add('hidden');
-                    
-                    // Hide current form
-                    document.getElementById(`${selectedMaterial}-step2`).classList.add('hidden');
-                    
+                    hideLoadingOverlay();
+                    // Hide the current step form
+                    document.getElementById(currentStepId).classList.add('hidden');
+                     // Update final step indicator
+                    if(selectedMaterial === 'flyer') {
+                         document.getElementById('step3-indicator').classList.remove('active');
+                         document.getElementById('step3-indicator').classList.add('completed');
+                    } else {
+                         document.getElementById('step2-indicator').classList.remove('active');
+                         document.getElementById('step2-indicator').classList.add('completed');
+                    }
                     // Show success message
                     document.getElementById('success-message').classList.remove('hidden');
                 }, function(error) {
                     console.log('FAILED...', error);
-                    
-                    // Hide loading overlay
-                    document.getElementById('loading-overlay').classList.add('hidden');
-                    
-                    alert('There was an error submitting your request. Please try again.');
+                    hideLoadingOverlay();
+                    alert('There was an error submitting your request. Please check your details and try again. Error: ' + JSON.stringify(error));
                 });
         }
-        
+
+         // Show/Hide Loading Overlay
+        function showLoadingOverlay() {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+        function hideLoadingOverlay() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+
         // Function to start a new request
         function startNewRequest() {
             // Reset selections
             selectedMaterial = null;
             selectedFlyerType = null;
-            
+
             // Reset forms
             const forms = document.querySelectorAll('form');
             forms.forEach(form => form.reset());
-            
+
+             // Explicitly hide EDDM zip container and remove requirement
+             const eddmZipContainer = document.getElementById('eddm-zip-container');
+             if (eddmZipContainer) eddmZipContainer.classList.add('hidden');
+             const eddmZipInput = document.getElementById('flyer-eddmZip');
+             if (eddmZipInput) eddmZipInput.required = false;
+              // Reset pen validation input
+            const penValidationInput = document.getElementById('pen-options-validation');
+            if(penValidationInput) penValidationInput.value = '';
+
+
             // Remove selected classes
             const materialCards = document.querySelectorAll('.material-card');
             materialCards.forEach(card => card.classList.remove('selected'));
-            
+
             const flyerTypeCards = document.querySelectorAll('.flyer-type-card');
             flyerTypeCards.forEach(card => card.classList.remove('selected'));
-            
+
             // Hide success message
             document.getElementById('success-message').classList.add('hidden');
-            
-            // Reset step indicators
+
+            // Hide all step content divs except step 1
+            document.querySelectorAll('.step-content').forEach(el => {
+                if (el.id !== 'step1') {
+                   el.classList.add('hidden');
+                } else {
+                    el.classList.remove('hidden'); // Ensure step 1 is shown
+                }
+            });
+
+
+            // Reset step indicators to initial state (Step 1 active)
             document.getElementById('step1-indicator').classList.add('active');
             document.getElementById('step1-indicator').classList.remove('completed');
-            document.getElementById('step2-indicator').classList.remove('active');
-            document.getElementById('step2-indicator').classList.remove('completed');
-            document.getElementById('step3-indicator').classList.remove('active');
+            document.getElementById('step2-indicator').classList.remove('active', 'completed');
+            document.getElementById('step3-indicator').classList.remove('active', 'completed');
             document.getElementById('line1').classList.remove('active');
             document.getElementById('line2').classList.remove('active');
-            
-            // Show step 1
-            document.getElementById('step1').classList.remove('hidden');
+
+
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938a950e35671db9',t:'MTc0NjA1MzI2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    </body>
 </html>
