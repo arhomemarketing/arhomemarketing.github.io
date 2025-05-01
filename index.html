@@ -144,15 +144,16 @@
                  <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="listingbrochure" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                            <rect x="6" y="3" width="12" height="18" rx="1" />
-                            <path d="M12 3 L12 21" />
-                            <path d="M9 7 L11 7" />
-                            <path d="M9 11 L11 11" />
-                            <path d="M9 15 L11 15" />
-                            <path d="M13 7 L15 7" />
-                            <path d="M13 11 L15 11" />
-                            <path d="M13 15 L15 15" />
-                        </svg>
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5C4 3.89543 4.89543 3 6 3H12M12 3H18C19.1046 3 20 3.89543 20 5V19M12 3V19" />
+                             <line x1="5" y1="7" x2="11" y2="7" stroke-width="1"/>
+                             <line x1="5" y1="10" x2="11" y2="10" stroke-width="1"/>
+                             <line x1="5" y1="13" x2="11" y2="13" stroke-width="1"/>
+                             <line x1="5" y1="16" x2="11" y2="16" stroke-width="1"/>
+                             <line x1="13" y1="7" x2="19" y2="7" stroke-width="1"/>
+                             <line x1="13" y1="10" x2="19" y2="10" stroke-width="1"/>
+                             <line x1="13" y1="13" x2="19" y2="13" stroke-width="1"/>
+                             <line x1="13" y1="16" x2="19" y2="16" stroke-width="1"/>
+                         </svg>
                     </div>
                     <h4 class="font-semibold text-center">listing brochures</h4>
                 </div>
@@ -299,19 +300,8 @@
                  </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        <label for="card-material" class="block mb-2 font-semibold text-gray-700">material</label>
-                        <select id="card-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required onchange="handleCardSpecChange()">
-                            <option value="standard glossy">standard glossy</option>
-                            <option value="heavyweight glossy">heavyweight glossy</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="card-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
-                        <select id="card-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-                             <option value="" disabled selected>select material and sides first</option>
-                        </select>
-                    </div>
+                    <div><label for="card-material" class="block mb-2 font-semibold text-gray-700">material</label><select id="card-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required onchange="handleCardSpecChange()"><option value="standard glossy">standard glossy</option><option value="heavyweight glossy">heavyweight glossy</option></select></div>
+                    <div><label for="card-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label><select id="card-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="" disabled selected>select material and sides first</option></select></div>
                 </div>
 
                 <div class="mt-6"><label for="card-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="card-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
@@ -365,18 +355,18 @@
                     <div><label for="forsalesign-website" class="block mb-2 font-semibold text-gray-700">website (optional)</label><input type="url" id="forsalesign-website" name="website" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 </div>
                 <div class="mt-6">
-                    <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
-                    <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required>
-                        <option value="3">3 signs - $243.02</option>
-                        <option value="4">4 signs - $319.54</option>
-                        <option value="5">5 signs - $384.02</option>
-                        <option value="6">6 signs - $476.26</option>
-                        <option value="7">7 signs - $547.50</option>
-                        <option value="8">8 signs - $619.44</option>
-                        <option value="9">9 signs - $693.42</option>
-                        <option value="10">10 signs - $700.24</option>
-                    </select>
-                     <p class="text-xs text-gray-500 mt-1">prices may shift slightly due to daily shipping costs changes.</p>
+                      <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
+                      <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required>
+                          <option value="3">3 signs - $243.02</option>
+                          <option value="4">4 signs - $319.54</option>
+                          <option value="5">5 signs - $384.02</option>
+                          <option value="6">6 signs - $476.26</option>
+                          <option value="7">7 signs - $547.50</option>
+                          <option value="8">8 signs - $619.44</option>
+                          <option value="9">9 signs - $693.42</option>
+                          <option value="10">10 signs - $700.24</option>
+                       </select>
+                       <p class="text-xs text-gray-500 mt-1">prices may shift slightly due to daily shipping costs changes.</p>
                  </div>
                 <div class="mt-6"><label for="forsalesign-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="forsalesign-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
@@ -587,7 +577,7 @@
             document.querySelectorAll('.flyer-type-card.selected').forEach(c => c.classList.remove('selected'));
 
             currentMaterial = state.material || null;
-            currentFlyerType = state.flyerType || null;
+            currentFlyerType = state.flyerType || null; // flyerType applies to Postcards now
 
             if (currentMaterial) document.querySelector(`.material-card[data-material="${currentMaterial}"]`)?.classList.add('selected');
             if (currentFlyerType) {
@@ -600,7 +590,7 @@
              }
 
              const backSideContainer = document.getElementById('back-side-container');
-             if (backSideContainer) backSideContainer.classList.add('hidden'); // Hide by default, shown later if needed
+             if (backSideContainer) backSideContainer.classList.add('hidden'); // Hide by default
 
             switch (state.page) {
                 case 'step1':
@@ -627,11 +617,11 @@
                             formDiv.classList.remove('hidden');
                             stepIndicators[2].classList.add('active');
                              if (state.material === 'businesscard') {
-                                 // Set initial state for dynamic fields
+                                 // Update BC dropdown when showing this form
                                  const materialSelect = document.getElementById('card-material');
-                                 const sidesRadio = document.querySelector('input[name="cardSides"]:checked') || document.getElementById('sides-one'); // Default to one-sided if null
-                                 updateBusinessCardQuantityOptions(materialSelect.value, sidesRadio.value); // Populate based on current/default values
-                                 toggleBackSideText(); // Ensure back side text area visibility is correct
+                                 const sidesRadio = document.querySelector('input[name="cardSides"]:checked') || document.getElementById('sides-one');
+                                 updateBusinessCardQuantityOptions(materialSelect.value, sidesRadio.value);
+                                 toggleBackSideText(); // Ensure back side visibility matches radio state
                              }
                         } else {
                              console.error(`Details form not found for material: ${state.material}`);
@@ -665,7 +655,8 @@
         // Event Handlers / Navigation / UI Toggles
         function selectMaterial(card) {
             const material = card.getAttribute('data-material');
-            let nextState = (material === 'flyer') // 'flyer' is Postcards now
+            // 'flyer' is Postcards now
+            let nextState = (material === 'flyer')
                 ? { page: 'flyerTypeSelection', material: material }
                 : { page: 'detailsForm', material: material };
             navigateTo(nextState);
@@ -708,36 +699,48 @@
          // Update Business Card Quantity Dropdown based on selections
           function updateBusinessCardQuantityOptions(selectedMaterial, selectedSides) {
              const quantitySelect = document.getElementById('card-quantity');
-             if (!quantitySelect) return; // Exit if element not found
+             if (!quantitySelect) return;
 
-             // Clear existing options except the placeholder if it exists
-             quantitySelect.innerHTML = '<option value="" disabled selected>select quantity</option>'; // Keep a default or clear all
-
-             // Determine the correct pricing tier
-             const sideKey = selectedSides || 'one'; // Default to 'one' if null/undefined
+             const sideKey = selectedSides || 'one';
              const prices = businessCardPricing[sideKey]?.[selectedMaterial];
 
+             // Store current selected value if possible
+              const currentQuantityValue = quantitySelect.value;
+
+             quantitySelect.innerHTML = ''; // Clear existing options
+
              if (prices) {
-                 // Populate with new options
+                 // Add a default placeholder option
+                 const placeholderOption = document.createElement('option');
+                 placeholderOption.value = "";
+                 placeholderOption.textContent = "select quantity";
+                 placeholderOption.disabled = true;
+                 quantitySelect.appendChild(placeholderOption);
+
                  for (const quantity in prices) {
                      const price = prices[quantity];
                      const option = document.createElement('option');
                      option.value = quantity;
-                     option.textContent = `${quantity} - $${price.toFixed(2)}`; // Format price
+                     option.textContent = `${quantity} - $${price.toFixed(2)}`;
                      quantitySelect.appendChild(option);
                  }
-                  quantitySelect.disabled = false; // Enable select
-                  // Restore placeholder if no price found or needed? Optional.
-                  if (Object.keys(prices).length === 0) {
-                     quantitySelect.innerHTML = '<option value="" disabled selected>pricing unavailable</option>';
-                     quantitySelect.disabled = true;
+                  quantitySelect.disabled = false;
+
+                  // Try to restore previous selection if it's still valid
+                  if (quantitySelect.querySelector(`option[value="${currentQuantityValue}"]`)) {
+                      quantitySelect.value = currentQuantityValue;
+                  } else {
+                      quantitySelect.value = ""; // Select placeholder if previous value invalid
                   }
 
              } else {
-                 // Handle case where pricing is not defined for the combination
                  console.warn(`Pricing not found for material: ${selectedMaterial}, sides: ${sideKey}`);
-                 quantitySelect.innerHTML = '<option value="" disabled selected>select material/sides first</option>';
-                 quantitySelect.disabled = true; // Disable select if no valid options
+                 const disabledOption = document.createElement('option');
+                 disabledOption.value = "";
+                 disabledOption.textContent = "select material/sides first";
+                 disabledOption.disabled = true;
+                 quantitySelect.appendChild(disabledOption);
+                 quantitySelect.disabled = true;
              }
          }
 
@@ -746,11 +749,10 @@
             const materialSelect = document.getElementById('card-material');
             const sidesRadio = document.querySelector('input[name="cardSides"]:checked');
             const selectedMaterial = materialSelect ? materialSelect.value : null;
-            const selectedSides = sidesRadio ? sidesRadio.value : 'one'; // Default to one-sided
+            const selectedSides = sidesRadio ? sidesRadio.value : 'one';
 
             updateBusinessCardQuantityOptions(selectedMaterial, selectedSides);
-            // Also handle the back side text visibility which depends only on sidedness
-             toggleBackSideText();
+            toggleBackSideText(); // Also handles visibility based on sides choice
         }
 
 
@@ -776,7 +778,7 @@
         function submitForm(formId) {
             const form = document.getElementById(formId);
             if (formId === 'pen-form') validatePenOptions();
-            if (formId === 'businesscard-form') toggleBackSideText(); // Ensure req state is correct
+            if (formId === 'businesscard-form') toggleBackSideText();
 
             if (!form.checkValidity()) { form.reportValidity(); return; }
             showLoadingOverlay();
@@ -791,11 +793,21 @@
             if (penOptions.length > 0) templateParams['penOptions'] = penOptions.join(', ');
             if (formId === 'businesscard-form' && templateParams.cardSides === 'one') delete templateParams.backSideText;
 
-            // Add price to submitted data for business cards
+            // Add selected quantity/price text to business card submission
              if (formId === 'businesscard-form') {
                  const quantitySelect = document.getElementById('card-quantity');
-                 const selectedOptionText = quantitySelect.options[quantitySelect.selectedIndex].text;
-                 templateParams['selectedQuantityAndPrice'] = selectedOptionText;
+                 if (quantitySelect.selectedIndex > 0) { // Ensure it's not the placeholder
+                    templateParams['selectedQuantityAndPrice'] = quantitySelect.options[quantitySelect.selectedIndex].text;
+                 } else {
+                    templateParams['selectedQuantityAndPrice'] = 'N/A - Quantity not selected'; // Or handle error
+                 }
+             }
+             // Add selected quantity/price text to for sale sign submission
+              if (formId === 'forsalesign-form') {
+                 const quantitySelect = document.getElementById('forsalesign-quantity');
+                 if (quantitySelect.selectedIndex >= 0) { // No placeholder here
+                    templateParams['selectedQuantityAndPrice'] = quantitySelect.options[quantitySelect.selectedIndex].text;
+                 }
              }
 
 
@@ -840,13 +852,11 @@
             if(backSideContainer) backSideContainer.classList.add('hidden');
             const backSideText = document.getElementById('card-backSideText');
             if(backSideText) backSideText.required = false;
-            // Reset BC quantity dropdown to default
              const bcQuantitySelect = document.getElementById('card-quantity');
              if (bcQuantitySelect) {
                  bcQuantitySelect.innerHTML = '<option value="" disabled selected>select material and sides first</option>';
                  bcQuantitySelect.disabled = true;
              }
-
             navigateTo({ page: 'step1' });
         }
     </script>
