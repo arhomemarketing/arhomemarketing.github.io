@@ -720,8 +720,8 @@
         }
 
         function sendEmail(templateParams, originMaterial) {
-            const serviceID = 'YOUR_SERVICE_ID'; // Replace!
-            const templateID = 'YOUR_TEMPLATE_ID'; // Replace!
+            const serviceID = 'default_service'; // Replace!
+            const templateID = 'marketing_request'; // Replace!
             console.log("Sending email with params:", templateParams);
              emailjs.send(serviceID, templateID, templateParams)
                 .then(response => {
