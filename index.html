@@ -28,11 +28,21 @@
             font-weight: 700;
         }
 
+        /* Ensure specific labels with potentially mixed case requirements are not forced lowercase */
+        label[for="card-fullName"] {
+             text-transform: none; /* Allow "Name As You Would..." */
+        }
+         /* Ensure specific questions are not forced lowercase */
+        label[for="doorhanger-doorhangerText"],
+        label[for="card-backSideText"] {
+             text-transform: none; /* Allow "What would you like..." */
+        }
+
+
         input, select, textarea {
             font-family: 'Avenir Next LT Pro', 'Montserrat', sans-serif;
             font-weight: 700;
-            /* Ensure inputs don't inherit lowercase */
-            text-transform: none;
+            text-transform: none; /* Ensure inputs never inherit lowercase */
         }
 
         .btn-primary { background-color: var(--primary); color: white; transition: all 0.3s ease; }
@@ -92,7 +102,7 @@
         </div>
 
         <div id="step1" class="step-content">
-             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 1: select product type</h3>
+            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 1: select product type</h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="businesscard" onclick="selectMaterial(this)">
@@ -122,10 +132,20 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
                     </div>
-                    <h4 class="font-semibold text-center">marketing flyers</h4>
+                    <h4 class="font-semibold text-center">postcards</h4>
                 </div>
 
-                <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="listingbrochure" onclick="selectMaterial(this)">
+                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="rider" onclick="selectMaterial(this)">
+                    <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
+                            <rect x="2" y="9" width="20" height="6" rx="1" />
+                            <line x1="6" y1="12" x2="18" y2="12" />
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-center">riders</h4>
+                </div>
+
+                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="listingbrochure" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
                             <rect x="6" y="3" width="12" height="18" rx="1" />
@@ -154,16 +174,6 @@
                     <h4 class="font-semibold text-center">door hangers</h4>
                 </div>
 
-                <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="rider" onclick="selectMaterial(this)">
-                    <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                            <rect x="2" y="9" width="20" height="6" rx="1" />
-                            <line x1="6" y1="12" x2="18" y2="12" />
-                        </svg>
-                    </div>
-                    <h4 class="font-semibold text-center">riders</h4>
-                </div>
-
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="nametag" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -185,8 +195,7 @@
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="folder" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                             <path d="M 5 3 L 19 3 C 20.105 3 21 3.895 21 5 L 21 19 C 21 20.105 20.105 21 19 21 L 5 21 C 3.895 21 3 20.105 3 19 L 3 5 C 3 3.895 3.895 3 5 3 Z M 12 4 L 12 20" />
-                             <path d="M 5 4 L 12 4 L 12 20 L 5 20 C 3.895 20 3 19.105 3 18 L 3 6 C 3 4.895 3.895 4 5 4 Z" fill="currentColor" fill-opacity="0.1"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5C4 3.89543 4.89543 3 6 3H12M12 3H18C19.1046 3 20 3.89543 20 5V19M12 3V19" />
                         </svg>
                     </div>
                     <h4 class="font-semibold text-center">folders</h4>
@@ -195,7 +204,7 @@
         </div>
 
         <div id="flyer-step2" class="step-content hidden">
-            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: choose your flyer type</h3>
+            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: choose your postcard type</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-listed" onclick="selectFlyerType(this)">
                      <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
@@ -222,14 +231,14 @@
         </div>
 
         <div id="flyer-step3" class="step-content hidden">
-            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 3: flyer info</h3>
+            <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 3: postcard info</h3>
              <form id="flyer-form" class="bg-white p-6 rounded-lg shadow-md">
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div><label for="flyer-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="flyer-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                     <div><label for="flyer-listingAddress" class="block mb-2 font-semibold text-gray-700">listing address</label><input type="text" id="flyer-listingAddress" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                 </div>
                  <div class="mt-6"><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="headshot-yes" name="headshot" value="yes" required><label for="headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="headshot-no" name="headshot" value="no"><label for="headshot-no">no</label></div></div></div>
-                 <div class="mt-6"><label for="flyer-flyerText" class="block mb-2 font-semibold text-gray-700">text for flyer</label><textarea id="flyer-flyerText" name="flyerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea></div>
+                 <div class="mt-6"><label for="flyer-flyerText" class="block mb-2 font-semibold text-gray-700">text for postcard</label><textarea id="flyer-flyerText" name="flyerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea></div>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="flyer-preferredSize" class="block mb-2 font-semibold text-gray-700">preferred size</label><select id="flyer-preferredSize" name="preferredSize" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="6.5x8">6.5" x 8"</option><option value="6.5x9">6.5" x 9"</option><option value="8.5x11">8.5" x 11"</option></select></div>
                     <div><label for="flyer-quantity" class="block mb-2 font-semibold text-gray-700">quantity needed</label><select id="flyer-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option><option value="1000">1000</option></select></div>
@@ -238,7 +247,7 @@
                  <div id="eddm-zip-container" class="mt-6 hidden"><label for="flyer-eddmZip" class="block mb-2 font-semibold text-gray-700">zip code for eddm</label><input type="text" id="flyer-eddmZip" name="eddmZip" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                  <div class="mt-6"><label for="flyer-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="flyer-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                  <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
-                 <input type="hidden" name="materialType" value="flyer"><input type="hidden" name="flyerType" id="flyer-type-input">
+                 <input type="hidden" name="materialType" value="flyer"> <input type="hidden" name="productName" value="Postcard"> <input type="hidden" name="flyerType" id="flyer-type-input">
             </form>
              <div class="flex justify-between mt-8">
                 <button id="flyer-step3-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
@@ -252,7 +261,7 @@
                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div><label for="brochure-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="brochure-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
-                     <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="brochure-headshot-yes" name="headshot" value="yes" required><label for="brochure-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="brochure-headshot-no" name="headshot" value="no"><label for="brochure-headshot-no">no</label></div></div></div>
+                    <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="brochure-headshot-yes" name="headshot" value="yes" required><label for="brochure-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="brochure-headshot-no" name="headshot" value="no"><label for="brochure-headshot-no">no</label></div></div></div>
                 </div>
                 <h4 class="form-section-title mt-6">property information</h4>
                 <div><label for="brochure-listingAddress" class="block mb-2 font-semibold text-gray-700">listing address</label><input type="text" id="brochure-listingAddress" name="listingAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
@@ -274,49 +283,30 @@
              <form id="businesscard-form" class="bg-white p-6 rounded-lg shadow-md">
                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div><label for="card-fullName" class="block mb-2 font-semibold text-gray-700">name you would like on the card</label><input type="text" id="card-fullName" name="cardName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                     <div><label for="card-fullName" class="block mb-2 font-semibold text-gray-700">name as you would like on the card</label><input type="text" id="card-fullName" name="cardName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                     <div><label for="card-email" class="block mb-2 font-semibold text-gray-700">email address</label><input type="email" id="card-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="card-phone" class="block mb-2 font-semibold text-gray-700">phone number</label><input type="tel" id="card-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
-                     <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="card-headshot-yes" name="headshot" value="yes" required><label for="card-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="card-headshot-no" name="headshot" value="no"><label for="card-headshot-no">no</label></div></div></div>
+                    <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="card-headshot-yes" name="headshot" value="yes" required><label for="card-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="card-headshot-no" name="headshot" value="no"><label for="card-headshot-no">no</label></div></div></div>
                 </div>
 
                 <h4 class="form-section-title mt-6">card specifications</h4>
                  <div class="mt-6">
                      <label class="block mb-2 font-semibold text-gray-700">sides</label>
                      <div class="flex">
-                         <div class="radio-container">
-                             <input type="radio" id="sides-one" name="cardSides" value="one" required onchange="toggleBackSideText()">
-                             <label for="sides-one">one sided</label>
-                         </div>
-                         <div class="radio-container">
-                             <input type="radio" id="sides-double" name="cardSides" value="double" onchange="toggleBackSideText()">
-                             <label for="sides-double">double sided</label>
-                         </div>
+                         <div class="radio-container"><input type="radio" id="sides-one" name="cardSides" value="one" required onchange="toggleBackSideText()"><label for="sides-one">one sided</label></div>
+                         <div class="radio-container"><input type="radio" id="sides-double" name="cardSides" value="double" onchange="toggleBackSideText()"><label for="sides-double">double sided</label></div>
                      </div>
                  </div>
-                 <div id="back-side-container" class="mt-6 hidden">
+                  <div id="back-side-container" class="mt-6 hidden">
                      <label for="card-backSideText" class="block mb-2 font-semibold text-gray-700">what would you like on the back?</label>
                      <textarea id="card-backSideText" name="backSideText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea>
                  </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        <label for="card-material" class="block mb-2 font-semibold text-gray-700">material</label>
-                         <select id="card-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-                            <option value="standard glossy">standard glossy</option>
-                            <option value="heavyweight glossy">heavyweight glossy</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="card-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label>
-                        <select id="card-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-                            <option value="50">50</option><option value="100">100</option><option value="250">250</option>
-                            <option value="300">300</option><option value="500">500</option><option value="750">750</option>
-                            <option value="1000">1000</option>
-                        </select>
-                    </div>
+                    <div><label for="card-material" class="block mb-2 font-semibold text-gray-700">material</label><select id="card-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="standard glossy">standard glossy</option><option value="heavyweight glossy">heavyweight glossy</option></select></div>
+                    <div><label for="card-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label><select id="card-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="300">300</option><option value="500">500</option><option value="750">750</option><option value="1000">1000</option></select></div>
                 </div>
 
                 <div class="mt-6"><label for="card-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="card-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
@@ -339,13 +329,13 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="doorhanger-phone" class="block mb-2 font-semibold text-gray-700">phone number</label><input type="tel" id="doorhanger-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
-                     <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="doorhanger-headshot-yes" name="headshot" value="yes" required><label for="doorhanger-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="doorhanger-headshot-no" name="headshot" value="no"><label for="doorhanger-headshot-no">no</label></div></div></div>
+                    <div><label class="block mb-2 font-semibold text-gray-700">use your photo?</label><div class="flex"><div class="radio-container"><input type="radio" id="doorhanger-headshot-yes" name="headshot" value="yes" required><label for="doorhanger-headshot-yes">yes</label></div><div class="radio-container"><input type="radio" id="doorhanger-headshot-no" name="headshot" value="no"><label for="doorhanger-headshot-no">no</label></div></div></div>
                 </div>
                 <h4 class="form-section-title mt-6">door hanger specifications</h4>
-                <div class="mt-6"><label for="doorhanger-doorhangerText" class="block mb-2 font-semibold text-gray-700">your text for door hanger</label><textarea id="doorhanger-doorhangerText" name="doorhangerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea></div>
+                 <div class="mt-6"><label for="doorhanger-doorhangerText" class="block mb-2 font-semibold text-gray-700">what would you like on the door hanger</label><textarea id="doorhanger-doorhangerText" name="doorhangerText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="doorhanger-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label><select id="doorhanger-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option><option value="1000">1000</option></select></div>
-                     <div><label for="doorhanger-material" class="block mb-2 font-semibold text-gray-700">material</label><select id="doorhanger-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="standard glossy">standard glossy</option><option value="heavyweight glossy">heavyweight glossy</option></select></div>
+                    <div><label for="doorhanger-material" class="block mb-2 font-semibold text-gray-700">material</label><select id="doorhanger-material" name="material" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="standard glossy">standard glossy</option><option value="heavyweight glossy">heavyweight glossy</option></select></div>
                 </div>
                 <div class="mt-6"><label for="doorhanger-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="doorhanger-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
@@ -371,7 +361,8 @@
                 </div>
                 <div class="mt-6">
                       <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
-                      <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required> <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                      <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required>
+                         <option value="3">3</option><option value="4">4</option><option value="5">5</option>
                          <option value="6">6</option><option value="7">7</option><option value="8">8</option>
                          <option value="9">9</option><option value="10">10</option><option value="15">15</option>
                          <option value="20">20</option>
@@ -390,13 +381,13 @@
         <div id="rider-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: rider details</h3>
             <form id="rider-form" class="bg-white p-6 rounded-lg shadow-md">
-                 <div class="product-description"><p>real estate sign rider matches our for sale sign size. sign rider is powder coated for a smooth finish and has rounded corners. hardware is included.</p></div>
+                 <div class="product-description"><p>real estate sign rider matches our for sale sign size.</p></div>
                 <h4 class="form-section-title">agent information</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div><label for="rider-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="rider-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                     <div><label for="rider-phone" class="block mb-2 font-semibold text-gray-700">phone number</label><input type="tel" id="rider-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                 </div>
-                 <div class="mt-6"><label for="rider-riderText" class="block mb-2 font-semibold text-gray-700">text you would like on the rider</label><textarea id="rider-riderText" name="riderText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24" required></textarea></div>
+                <div class="mt-6"><label for="rider-riderText" class="block mb-2 font-semibold text-gray-700">text you would like on the rider</label><textarea id="rider-riderText" name="riderText" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24" required></textarea></div>
                 <div class="mt-6"><label for="rider-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label><select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" id="rider-quantity" required><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="20">20</option></select></div>
                 <div class="mt-6"><label for="rider-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="rider-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
@@ -434,11 +425,11 @@
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: pen details</h3>
             <form id="pen-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div><label for="pen-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="pen-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                    <div><label for="pen-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="pen-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                     <div><label for="pen-phone" class="block mb-2 font-semibold text-gray-700">phone</label><input type="tel" id="pen-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                 </div>
                 <div class="mt-6">
-                    <label class="block mb-2 font-semibold text-gray-700">choose what you want on the pen (at least one required)</label>
+                     <label class="block mb-2 font-semibold text-gray-700">choose what you want on the pen</label>
                     <div class="flex flex-wrap">
                         <div class="checkbox-container"><input type="checkbox" id="pen-logo" name="penOptions" value="logo" onclick="validatePenOptions()"><label for="pen-logo">arhome logo</label></div>
                         <div class="checkbox-container"><input type="checkbox" id="pen-name" name="penOptions" value="name" onclick="validatePenOptions()"><label for="pen-name">your name</label></div>
@@ -461,7 +452,7 @@
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: folder details</h3>
             <form id="folder-form" class="bg-white p-6 rounded-lg shadow-md">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div><label for="folder-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="folder-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                    <div><label for="folder-fullName" class="block mb-2 font-semibold text-gray-700">full name</label><input type="text" id="folder-fullName" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                     <div><label for="folder-phone" class="block mb-2 font-semibold text-gray-700">phone</label><input type="tel" id="folder-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -471,17 +462,10 @@
                  <div class="mt-6">
                      <label class="block mb-2 font-semibold text-gray-700">use your photo?</label>
                      <div class="flex">
-                         <div class="radio-container">
-                             <input type="radio" id="folder-photo-yes" name="headshot" value="yes" required>
-                             <label for="folder-photo-yes">yes</label>
-                         </div>
-                         <div class="radio-container">
-                             <input type="radio" id="folder-photo-no" name="headshot" value="no">
-                             <label for="folder-photo-no">no</label>
-                         </div>
+                         <div class="radio-container"><input type="radio" id="folder-photo-yes" name="headshot" value="yes" required><label for="folder-photo-yes">yes</label></div>
+                         <div class="radio-container"><input type="radio" id="folder-photo-no" name="headshot" value="no"><label for="folder-photo-no">no</label></div>
                      </div>
                  </div>
-
                 <div class="mt-6"><label for="folder-quantity" class="block mb-2 font-semibold text-gray-700">quantity</label><select id="folder-quantity" name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required><option value="10">10</option><option value="15">15</option><option value="50">50</option><option value="100">100</option></select></div>
                 <div class="mt-6"><label for="folder-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="folder-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
@@ -529,7 +513,7 @@
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', function() {
-            // EmailJS Key - Kept as requested
+            // Kept EmailJS Key as requested
             emailjs.init("uyWq42dx6HhjQJdpg");
 
             document.querySelectorAll('label[for]').forEach(label => {
@@ -596,10 +580,8 @@
                  if (flyerTypeInput) flyerTypeInput.value = '';
              }
 
-             // Reset conditional fields visibility before showing the correct step
              const backSideContainer = document.getElementById('back-side-container');
              if (backSideContainer) backSideContainer.classList.add('hidden');
-
 
             switch (state.page) {
                 case 'step1':
@@ -625,11 +607,11 @@
                         if (formDiv) {
                             formDiv.classList.remove('hidden');
                             stepIndicators[2].classList.add('active');
-                             // Handle conditional visibility for business cards when navigating back/forward
                              if (state.material === 'businesscard') {
                                  const sidesDouble = document.getElementById('sides-double');
+                                 // Check current form state if navigating back/forward
                                  if (sidesDouble && sidesDouble.checked) {
-                                     toggleBackSideText(); // Re-show if double was selected
+                                     toggleBackSideText(); // Ensure it's shown if checked
                                  }
                              }
                         } else {
@@ -664,6 +646,7 @@
         // --- Event Handlers / Navigation Triggers / UI Toggles ---
         function selectMaterial(card) {
             const material = card.getAttribute('data-material');
+            // Note: 'flyer' corresponds to 'Postcards' now in UI, but keep internal value 'flyer' for logic
             let nextState = (material === 'flyer')
                 ? { page: 'flyerTypeSelection', material: material }
                 : { page: 'detailsForm', material: material };
@@ -690,7 +673,6 @@
             }
         }
 
-         // Toggle Business Card Back Side Text Area
          function toggleBackSideText() {
              const sidesDouble = document.getElementById('sides-double');
              const backSideContainer = document.getElementById('back-side-container');
@@ -698,14 +680,13 @@
 
              if (sidesDouble && sidesDouble.checked) {
                  backSideContainer.classList.remove('hidden');
-                 backSideText.required = true; // Make required only if double sided
+                 backSideText.required = true;
              } else {
                  backSideContainer.classList.add('hidden');
                  backSideText.required = false;
-                 backSideText.value = ''; // Clear value if switching back to single sided
+                 backSideText.value = '';
              }
          }
-
 
         function validatePenOptions() {
             const checkboxes = document.querySelectorAll('input[name="penOptions"]:checked');
@@ -721,16 +702,14 @@
             showLoadingOverlay();
             const templateParams = Object.fromEntries(new FormData(form).entries());
             templateParams.flyerType = templateParams.flyerType || currentFlyerType || 'unknown';
+             templateParams.productName = 'Postcard'; // Explicitly set product name
             sendEmail(templateParams, 'flyer');
         }
 
         function submitForm(formId) {
             const form = document.getElementById(formId);
             if (formId === 'pen-form') validatePenOptions();
-            // Handle business card back side text requirement before validation
-            if (formId === 'businesscard-form') {
-                toggleBackSideText(); // Ensures requirement is set correctly based on radio button
-            }
+            if (formId === 'businesscard-form') toggleBackSideText(); // Ensure req state is correct
 
             if (!form.checkValidity()) { form.reportValidity(); return; }
             showLoadingOverlay();
@@ -744,7 +723,6 @@
             }
             if (penOptions.length > 0) templateParams['penOptions'] = penOptions.join(', ');
 
-            // Clean up backSideText if single-sided was chosen
             if (formId === 'businesscard-form' && templateParams.cardSides === 'one') {
                 delete templateParams.backSideText;
             }
@@ -754,9 +732,9 @@
         }
 
         function sendEmail(templateParams, originMaterial) {
-            // EmailJS IDs - Kept as requested
-            const serviceID = 'default_service'; // Replace if needed (e.g., for testing/prod)
-            const templateID = 'marketing_request'; // Replace with your specific template ID
+            // EmailJS IDs - Using placeholder, replace with your actual IDs
+            const serviceID = 'default_service'; // Replace if needed!
+            const templateID = 'marketing_request'; // Replace with your template ID!
             console.log("Sending email with params:", templateParams);
              emailjs.send(serviceID, templateID, templateParams)
                 .then(response => {
@@ -786,13 +764,10 @@
             if (penValidationInput) penValidationInput.value = '';
             const penCheckboxes = document.querySelectorAll('input[name="penOptions"]');
             penCheckboxes.forEach(cb => cb.setCustomValidity(''));
-            // Reset business card back side state
-             const backSideContainer = document.getElementById('back-side-container');
-             if(backSideContainer) backSideContainer.classList.add('hidden');
-             const backSideText = document.getElementById('card-backSideText');
-             if(backSideText) backSideText.required = false;
-
-
+            const backSideContainer = document.getElementById('back-side-container');
+            if(backSideContainer) backSideContainer.classList.add('hidden');
+            const backSideText = document.getElementById('card-backSideText');
+            if(backSideText) backSideText.required = false;
             navigateTo({ page: 'step1' });
         }
     </script>
