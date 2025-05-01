@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARHome Realty Marketing Materials Request</title>
+    <title>arhome realty Marketing Materials Request</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
@@ -24,7 +24,8 @@
         }
 
         /* Apply lowercase specifically to static text elements */
-        h1, h2, h3, h4, h5, h6, p, span, button, label, div.material-card h4, div.flyer-type-card h4, .marketing-note p, .success-message p, .loading-overlay p, label {
+        /* Added arhome logo checkbox label */
+        h1, h2, h3, h4, h5, h6, p, span, button, label, div.material-card h4, div.flyer-type-card h4, .marketing-note p, .success-message p, .loading-overlay p, label[for="pen-logo"], label {
             text-transform: lowercase;
             font-family: 'Avenir Next LT Pro', 'Montserrat', sans-serif;
             font-weight: 700;
@@ -343,7 +344,7 @@
                     <h4 class="font-semibold text-center">folders</h4>
                 </div>
             </div>
-            </div>
+        </div>
 
         <div id="flyer-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: choose your flyer type</h3>
@@ -352,8 +353,10 @@
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-listed" onclick="selectFlyerType(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            <rect x="15" y="3" width="2" height="4" stroke="currentColor" />
+                           <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                           <rect x="15" y="1" width="2" height="4" stroke="currentColor" />
+                           <line x1="19" y1="14" x2="19" y2="20" stroke="currentColor" stroke-width="1"/>
+                           <rect x="17.5" y="14" width="3" height="2" stroke="currentColor" fill="white" stroke-width="1"/>
                         </svg>
                     </div>
                     <h4 class="font-semibold text-center">just listed</h4>
@@ -372,8 +375,8 @@
             </div>
 
             <div class="flex justify-between mt-8">
-                <button id="flyer-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
-                 </div>
+                <button id="flyer-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
+            </div>
         </div>
 
         <div id="flyer-step3" class="step-content hidden">
@@ -464,7 +467,7 @@
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="flyer-step3-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToFlyerStep2()">back</button>
+                 <button id="flyer-step3-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="flyer-step3-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitFlyerForm()">submit request</button>
             </div>
         </div>
@@ -531,7 +534,7 @@
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="listingbrochure-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="listingbrochure-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="listingbrochure-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('listingbrochure-form')">submit request</button>
             </div>
         </div>
@@ -601,14 +604,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="businesscard">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="businesscard-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="businesscard-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="businesscard-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('businesscard-form')">submit request</button>
             </div>
         </div>
@@ -681,14 +684,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="doorhanger">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="doorhanger-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="doorhanger-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="doorhanger-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('doorhanger-form')">submit request</button>
             </div>
         </div>
@@ -740,14 +743,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="forsalesign">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="forsalesign-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="forsalesign-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="forsalesign-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('forsalesign-form')">submit request</button>
             </div>
         </div>
@@ -788,6 +791,10 @@
                         <option value="8">8</option>
                         <option value="9">9</option>
                         <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                     </select>
@@ -799,14 +806,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="rider">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="rider-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="rider-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="rider-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('rider-form')">submit request</button>
             </div>
         </div>
@@ -858,14 +865,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="nametag">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="nametag-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="nametag-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="nametag-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('nametag-form')">submit request</button>
             </div>
         </div>
@@ -889,7 +896,7 @@
                     <label class="block mb-2 font-semibold text-gray-700">choose what you want on the pen (at least one required)</label>
                      <div class="flex flex-wrap">
                         <div class="checkbox-container">
-                            <input type="checkbox" id="pen-logo" name="penOptions" value="logo" onclick="validatePenOptions()">
+                             <input type="checkbox" id="pen-logo" name="penOptions" value="logo" onclick="validatePenOptions()">
                             <label for="pen-logo">arhome logo</label>
                         </div>
                         <div class="checkbox-container">
@@ -920,14 +927,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="pen">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="pen-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="pen-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="pen-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('pen-form')">submit request</button>
             </div>
         </div>
@@ -974,14 +981,14 @@
                 </div>
 
                 <div class="marketing-note mt-6">
-                    <p>our marketing concierge will email you a quote and design proof.</p>
+                     <p>our marketing concierge will email you a quote and design proof.</p>
                 </div>
 
                 <input type="hidden" name="materialType" value="folder">
             </form>
 
             <div class="flex justify-between mt-8">
-                <button id="folder-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="backToStep1()">back</button>
+                 <button id="folder-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
                 <button id="folder-step2-submit" class="btn-accent px-6 py-2 rounded-lg font-semibold" onclick="submitForm('folder-form')">submit request</button>
             </div>
         </div>
@@ -995,7 +1002,7 @@
                 </div>
 
                 <h3 class="text-2xl font-bold mb-4" style="color: var(--primary);">thank you!</h3>
-                <p class="text-gray-600 mb-6">your request has been submitted and our marketing concierge™ will contact you shortly!</p>
+                 <p class="text-gray-600 mb-6">your request has been submitted and our marketing concierge™ will contact you shortly!</p>
 
                 <button id="new-request-button" class="btn-primary px-6 py-2 rounded-lg font-semibold" onclick="startNewRequest()">submit another request</button>
             </div>
@@ -1008,11 +1015,34 @@
     </div>
 
     <script>
-        // Initialize EmailJS
+        // State Variables
+        let currentMaterial = null;
+        let currentFlyerType = null;
+        let currentState = { page: 'step1' }; // Initial state
+
+        // --- DOM Elements (Cache if needed, but simple enough for now) ---
+        const step1Div = document.getElementById('step1');
+        const flyerStep2Div = document.getElementById('flyer-step2');
+        const flyerStep3Div = document.getElementById('flyer-step3');
+        const successDiv = document.getElementById('success-message');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        const stepIndicators = {
+            1: document.getElementById('step1-indicator'),
+            2: document.getElementById('step2-indicator'),
+            3: document.getElementById('step3-indicator')
+        };
+        const stepLines = {
+            1: document.getElementById('line1'),
+            2: document.getElementById('line2')
+        };
+
+        // --- Initialization ---
         document.addEventListener('DOMContentLoaded', function() {
             // IMPORTANT: Replace with your actual EmailJS User ID
-            emailjs.init("uyWq42dx6HhjQJdpg");
-            // Add event listeners for labels to focus corresponding inputs for accessibility/UX
+            emailjs.init("uyWq42dx6HhjQJdpg"); // Replace!
+
+            // Add event listeners for labels
             document.querySelectorAll('label[for]').forEach(label => {
                 label.addEventListener('click', function() {
                     const inputId = this.getAttribute('for');
@@ -1022,244 +1052,237 @@
                     }
                 });
             });
+
+            // Set initial state in history without adding an entry
+            history.replaceState(currentState, '', '');
+            // Update UI based on initial state (redundant here, but good practice)
+            updateUI(currentState);
+
+             // Add popstate listener for browser back/forward
+            window.addEventListener('popstate', handlePopState);
+
         });
 
-        // Variables to store selections
-        let selectedMaterial = null;
-        let selectedFlyerType = null;
+        // --- History and State Management ---
 
-        // Function to select material AND proceed to the next step
-        function selectMaterial(card) {
-            // Remove selected class from all cards
-            const materialCards = document.querySelectorAll('.material-card');
-            materialCards.forEach(c => c.classList.remove('selected'));
-
-            // Add selected class to clicked card
-            card.classList.add('selected');
-
-            // Store selected material
-            selectedMaterial = card.getAttribute('data-material');
-
-            // --- Logic from continueToStep2 is now here ---
-            if (!selectedMaterial) {
-                 // This should technically not happen if called via click, but good practice
-                console.error('Material selection failed.');
-                return;
-            }
-
-            // Hide step 1
-            document.getElementById('step1').classList.add('hidden');
-
-            // Update step indicators for step 2
-            document.getElementById('step1-indicator').classList.remove('active');
-            document.getElementById('step1-indicator').classList.add('completed');
-            document.getElementById('step2-indicator').classList.add('active');
-            document.getElementById('line1').classList.add('active');
-
-            // Ensure step 3 indicators are reset if coming back
-            document.getElementById('step3-indicator').classList.remove('active');
-            document.getElementById('line2').classList.remove('active');
-
-
-            // Show appropriate step 2 based on selection
-            if (selectedMaterial === 'flyer') {
-                document.getElementById('flyer-step2').classList.remove('hidden');
-                // Reset flyer type selection when returning
-                selectedFlyerType = null;
-                document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
-
+        function handlePopState(event) {
+             console.log("Popstate event fired. State:", event.state);
+             if (event.state) {
+                currentState = event.state;
+                updateUI(currentState);
             } else {
-                // Hide flyer-specific steps just in case
-                document.getElementById('flyer-step2').classList.add('hidden');
-                document.getElementById('flyer-step3').classList.add('hidden');
-                // Show the correct form step
-                document.getElementById(`${selectedMaterial}-step2`).classList.remove('hidden');
-                 // Only 2 steps visually for non-flyer items
-                document.getElementById('step3-indicator').classList.remove('active', 'completed');
-                document.getElementById('line2').classList.remove('active');
+                // Handles cases like going back to before the initial replaceState
+                // or if the state somehow becomes null. Go to step 1.
+                currentState = { page: 'step1' };
+                updateUI(currentState);
             }
         }
 
-        // Function to go back to step 1
-        function backToStep1() {
-             // Hide all possible step 2/3 divs
-             document.querySelectorAll('.step-content').forEach(el => {
-                if (el.id !== 'step1' && el.id !== 'success-message') { // Keep step 1 and success hidden/shown status
-                   el.classList.add('hidden');
-                }
-            });
-
-            // Reset Step 1 indicators
-            document.getElementById('step1-indicator').classList.add('active');
-            document.getElementById('step1-indicator').classList.remove('completed');
-            // Reset Step 2 indicators
-            document.getElementById('step2-indicator').classList.remove('active', 'completed');
-            document.getElementById('line1').classList.remove('active');
-            // Reset Step 3 indicators
-            document.getElementById('step3-indicator').classList.remove('active', 'completed');
-            document.getElementById('line2').classList.remove('active');
-
-            // Show step 1
-            document.getElementById('step1').classList.remove('hidden');
-
-            // Clear selections
-            selectedMaterial = null;
-            selectedFlyerType = null;
-            document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
-            document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
-
+        function navigateTo(newState) {
+            console.log("Navigating to state:", newState);
+            currentState = newState;
+            // Update the URL hash (optional, can help with deep linking/refresh)
+            // window.location.hash = newState.page + (newState.material ? `-${newState.material}` : '');
+            history.pushState(newState, '', window.location.pathname + window.location.search); // Keep URL clean or add hash
+            updateUI(newState);
         }
 
-        // Function to select flyer type AND proceed to step 3
+        function goBack() {
+            history.back();
+        }
+
+        // --- UI Update Function ---
+
+        function updateUI(state) {
+            console.log("Updating UI for state:", state);
+            // Hide all step content first
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+
+            // Reset indicators and lines
+            Object.values(stepIndicators).forEach(ind => ind.classList.remove('active', 'completed'));
+            Object.values(stepLines).forEach(line => line.classList.remove('active'));
+
+            // Reset selections visually
+             document.querySelectorAll('.material-card.selected').forEach(c => c.classList.remove('selected'));
+             document.querySelectorAll('.flyer-type-card.selected').forEach(c => c.classList.remove('selected'));
+
+
+            // Show the correct step div and update indicators based on state
+            switch (state.page) {
+                case 'step1':
+                    step1Div.classList.remove('hidden');
+                    stepIndicators[1].classList.add('active');
+                    currentMaterial = null; // Reset selections when returning to step 1
+                    currentFlyerType = null;
+                    break;
+
+                case 'flyerTypeSelection': // Intermediate step for flyers
+                    flyerStep2Div.classList.remove('hidden');
+                    stepIndicators[1].classList.add('completed');
+                    stepIndicators[2].classList.add('active');
+                    stepLines[1].classList.add('active');
+                     // Re-highlight selected material
+                    if (state.material) {
+                        document.querySelector(`.material-card[data-material="${state.material}"]`)?.classList.add('selected');
+                        currentMaterial = state.material; // Update current material state variable
+                    }
+                    currentFlyerType = null; // Reset flyer type when returning here
+                    break;
+
+                case 'detailsForm':
+                    stepIndicators[1].classList.add('completed');
+                    stepLines[1].classList.add('active');
+
+                    if (state.material === 'flyer') {
+                        flyerStep3Div.classList.remove('hidden');
+                        stepIndicators[2].classList.add('completed');
+                        stepIndicators[3].classList.add('active');
+                        stepLines[2].classList.add('active');
+                         // Re-highlight selections
+                         document.querySelector(`.material-card[data-material="flyer"]`)?.classList.add('selected');
+                         if(state.flyerType) {
+                            document.querySelector(`.flyer-type-card[data-flyer-type="${state.flyerType}"]`)?.classList.add('selected');
+                            document.getElementById('flyer-type-input').value = state.flyerType; // Ensure hidden input is set
+                            currentFlyerType = state.flyerType; // Update current flyer type state variable
+                         }
+                         currentMaterial = 'flyer'; // Update current material state variable
+                    } else if (state.material) {
+                        const formDivId = `${state.material}-step2`;
+                        const formDiv = document.getElementById(formDivId);
+                        if (formDiv) {
+                            formDiv.classList.remove('hidden');
+                            stepIndicators[2].classList.add('active'); // Only 2 steps shown for non-flyers
+                            // Re-highlight material selection
+                            document.querySelector(`.material-card[data-material="${state.material}"]`)?.classList.add('selected');
+                            currentMaterial = state.material; // Update current material state variable
+                        } else {
+                             console.error(`Details form not found for material: ${state.material}`);
+                             navigateTo({ page: 'step1'}); // Go back to step 1 if form missing
+                        }
+                    } else {
+                         console.error("Details form requested without material type.");
+                         navigateTo({ page: 'step1'}); // Go back to step 1 if material missing
+                    }
+                    break;
+
+                case 'success':
+                    successDiv.classList.remove('hidden');
+                     // Keep indicators completed from the last step before success
+                     // You might want specific styling here, e.g., all completed
+                    stepIndicators[1].classList.add('completed');
+                    stepLines[1].classList.add('active'); // Or 'completed' style if defined
+                     if(state.originMaterial === 'flyer') { // Need to know if it came from a 3-step or 2-step flow
+                         stepIndicators[2].classList.add('completed');
+                         stepLines[2].classList.add('active');
+                         stepIndicators[3].classList.add('completed');
+                     } else {
+                        stepIndicators[2].classList.add('completed');
+                         // No step 3 indicator/line for 2-step flows
+                     }
+                    break;
+
+                default:
+                    console.error("Unknown state:", state);
+                    step1Div.classList.remove('hidden');
+                    stepIndicators[1].classList.add('active');
+                    break;
+            }
+        }
+
+
+        // --- Event Handlers / Navigation Triggers ---
+
+        function selectMaterial(card) {
+            const material = card.getAttribute('data-material');
+            currentMaterial = material; // Store selection immediately
+
+            let nextState;
+            if (material === 'flyer') {
+                nextState = { page: 'flyerTypeSelection', material: material };
+            } else {
+                nextState = { page: 'detailsForm', material: material };
+            }
+            navigateTo(nextState);
+        }
+
         function selectFlyerType(card) {
-            // Remove selected class from all flyer type cards
-            const flyerTypeCards = document.querySelectorAll('.flyer-type-card');
-            flyerTypeCards.forEach(c => c.classList.remove('selected'));
+            const flyerType = card.getAttribute('data-flyer-type');
+             currentFlyerType = flyerType; // Store selection immediately
 
-            // Add selected class to clicked card
-            card.classList.add('selected');
-
-            // Store selected flyer type
-            selectedFlyerType = card.getAttribute('data-flyer-type');
-
-            // --- Logic from continueToFlyerStep3 is now here ---
-             if (!selectedFlyerType) {
-                // Should not happen on click
-                console.error("Flyer type not selected");
-                return;
-            }
-
-            // Set the flyer type in the hidden input of the flyer form
-            document.getElementById('flyer-type-input').value = selectedFlyerType;
-
-            // Hide step 2 (flyer type selection)
-            document.getElementById('flyer-step2').classList.add('hidden');
-
-            // Update step indicators for step 3
-            document.getElementById('step2-indicator').classList.remove('active');
-            document.getElementById('step2-indicator').classList.add('completed');
-            document.getElementById('step3-indicator').classList.add('active');
-            document.getElementById('line2').classList.add('active');
-
-            // Show step 3 (flyer details form)
-            document.getElementById('flyer-step3').classList.remove('hidden');
+            const nextState = { page: 'detailsForm', material: 'flyer', flyerType: flyerType };
+            navigateTo(nextState);
         }
 
-        // Function to go back to flyer step 2 (type selection)
-        function backToFlyerStep2() {
-            // Hide step 3 (flyer details)
-            document.getElementById('flyer-step3').classList.add('hidden');
-
-            // Update step indicators back to step 2
-            document.getElementById('step3-indicator').classList.remove('active');
-            document.getElementById('step2-indicator').classList.add('active');
-            document.getElementById('step2-indicator').classList.remove('completed');
-            document.getElementById('line2').classList.remove('active');
-
-            // Show step 2 (flyer type selection)
-            document.getElementById('flyer-step2').classList.remove('hidden');
-
-            // Clear flyer type selection
-            selectedFlyerType = null;
-            document.querySelectorAll('.flyer-type-card').forEach(c => c.classList.remove('selected'));
-            document.getElementById('flyer-type-input').value = ''; // Clear hidden input too
-        }
-
-        // Function to toggle EDDM zip code field visibility
         function toggleEddmZip() {
             const eddmYes = document.getElementById('eddm-yes');
             const eddmZipContainer = document.getElementById('eddm-zip-container');
-            const eddmZipInput = document.getElementById('flyer-eddmZip'); // Get the input element
+            const eddmZipInput = document.getElementById('flyer-eddmZip');
 
             if (eddmYes.checked) {
                 eddmZipContainer.classList.remove('hidden');
-                eddmZipInput.required = true; // Make required only when visible
+                eddmZipInput.required = true;
             } else {
                 eddmZipContainer.classList.add('hidden');
-                eddmZipInput.required = false; // Make not required when hidden
-                eddmZipInput.value = ''; // Clear value when hidden
+                eddmZipInput.required = false;
+                eddmZipInput.value = '';
             }
         }
 
-        // Function to handle Pen options checkbox validation (at least one must be checked)
         function validatePenOptions() {
             const checkboxes = document.querySelectorAll('input[name="penOptions"]:checked');
             const validationInput = document.getElementById('pen-options-validation');
             if (checkboxes.length > 0) {
-                validationInput.value = 'valid'; // Set a value to pass 'required'
-                validationInput.setCustomValidity(''); // Clear custom validity
+                validationInput.value = 'valid';
+                validationInput.setCustomValidity('');
             } else {
-                validationInput.value = ''; // Clear value to fail 'required'
-                validationInput.setCustomValidity('please select at least one option for the pen.'); // Set custom message
+                validationInput.value = '';
+                validationInput.setCustomValidity('please select at least one option for the pen.');
             }
         }
 
+        // --- Form Submission ---
 
-        // Function to submit flyer form (specific steps)
         function submitFlyerForm() {
             const form = document.getElementById('flyer-form');
-            if (!form.checkValidity()) {
-                form.reportValidity(); // Show browser validation messages
-                return;
-            }
-
-            showLoadingOverlay();
-
-            // Get form data
-            const formData = new FormData(form);
-            const templateParams = {};
-
-            // Convert FormData to object
-            for (let [key, value] of formData.entries()) {
-                templateParams[key] = value;
-            }
-            // Ensure flyerType is included (already set in hidden input)
-
-             sendEmail(templateParams, 'flyer-step3'); // Pass the ID of the current step div
-        }
-
-        // Function to submit other forms (generic step 2)
-        function submitForm(formId) {
-            const form = document.getElementById(formId);
-
-            // Special validation for pen options
-            if (formId === 'pen-form') {
-                validatePenOptions(); // Ensure validation runs before checkValidity
-            }
-
-
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
-
             showLoadingOverlay();
+            const formData = new FormData(form);
+            const templateParams = Object.fromEntries(formData.entries());
+            sendEmail(templateParams, 'flyer'); // Pass material type for success state
+        }
 
-            // Get form data
+        function submitForm(formId) {
+            const form = document.getElementById(formId);
+            if (formId === 'pen-form') {
+                validatePenOptions();
+            }
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            showLoadingOverlay();
             const formData = new FormData(form);
             const templateParams = {};
-            const penOptions = []; // Specific handling for pen checkboxes
+            const penOptions = [];
 
-            // Convert FormData to object
-            for (let [key, value] of formData.entries()) {
+             for (let [key, value] of formData.entries()) {
                  if (key === 'penOptions') {
-                    penOptions.push(value); // Collect pen options
+                    penOptions.push(value);
                 } else {
                     templateParams[key] = value;
                 }
             }
-
-            // Add collected pen options as a comma-separated string (or keep as array if template handles it)
              if (penOptions.length > 0) {
                 templateParams['penOptions'] = penOptions.join(', ');
             }
-
-            sendEmail(templateParams, formId.replace('-form', '-step2')); // Pass the ID of the current step div
+             const materialType = templateParams.materialType || formId.replace('-form','').replace('-step2',''); // Get material type
+            sendEmail(templateParams, materialType); // Pass material type for success state
         }
 
-        // Generic function to send email via EmailJS
-        function sendEmail(templateParams, currentStepId) {
-             // IMPORTANT: Replace with your actual EmailJS Service ID and Template ID
+        function sendEmail(templateParams, originMaterial) {
             const serviceID = 'default_service'; // Replace if needed
             const templateID = 'marketing_request'; // Replace with your template ID
 
@@ -1267,18 +1290,8 @@
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     hideLoadingOverlay();
-                    // Hide the current step form
-                    document.getElementById(currentStepId).classList.add('hidden');
-                     // Update final step indicator
-                    if(selectedMaterial === 'flyer') {
-                         document.getElementById('step3-indicator').classList.remove('active');
-                         document.getElementById('step3-indicator').classList.add('completed');
-                    } else {
-                         document.getElementById('step2-indicator').classList.remove('active');
-                         document.getElementById('step2-indicator').classList.add('completed');
-                    }
-                    // Show success message
-                    document.getElementById('success-message').classList.remove('hidden');
+                    // Navigate to success state, passing origin material
+                    navigateTo({ page: 'success', originMaterial: originMaterial });
                 }, function(error) {
                     console.log('FAILED...', error);
                     hideLoadingOverlay();
@@ -1286,65 +1299,29 @@
                 });
         }
 
-         // Show/Hide Loading Overlay
         function showLoadingOverlay() {
-            document.getElementById('loading-overlay').classList.remove('hidden');
+            loadingOverlay.classList.remove('hidden');
         }
         function hideLoadingOverlay() {
-            document.getElementById('loading-overlay').classList.add('hidden');
+            loadingOverlay.classList.add('hidden');
         }
 
-
-        // Function to start a new request
         function startNewRequest() {
-            // Reset selections
-            selectedMaterial = null;
-            selectedFlyerType = null;
-
             // Reset forms
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => form.reset());
-
-             // Explicitly hide EDDM zip container and remove requirement
+            document.querySelectorAll('form').forEach(form => form.reset());
+             // Explicitly hide EDDM zip container and handle requirements
              const eddmZipContainer = document.getElementById('eddm-zip-container');
              if (eddmZipContainer) eddmZipContainer.classList.add('hidden');
              const eddmZipInput = document.getElementById('flyer-eddmZip');
              if (eddmZipInput) eddmZipInput.required = false;
-              // Reset pen validation input
-            const penValidationInput = document.getElementById('pen-options-validation');
-            if(penValidationInput) penValidationInput.value = '';
+             const penValidationInput = document.getElementById('pen-options-validation');
+             if (penValidationInput) penValidationInput.value = '';
 
-
-            // Remove selected classes
-            const materialCards = document.querySelectorAll('.material-card');
-            materialCards.forEach(card => card.classList.remove('selected'));
-
-            const flyerTypeCards = document.querySelectorAll('.flyer-type-card');
-            flyerTypeCards.forEach(card => card.classList.remove('selected'));
-
-            // Hide success message
-            document.getElementById('success-message').classList.add('hidden');
-
-            // Hide all step content divs except step 1
-            document.querySelectorAll('.step-content').forEach(el => {
-                if (el.id !== 'step1') {
-                   el.classList.add('hidden');
-                } else {
-                    el.classList.remove('hidden'); // Ensure step 1 is shown
-                }
-            });
-
-
-            // Reset step indicators to initial state (Step 1 active)
-            document.getElementById('step1-indicator').classList.add('active');
-            document.getElementById('step1-indicator').classList.remove('completed');
-            document.getElementById('step2-indicator').classList.remove('active', 'completed');
-            document.getElementById('step3-indicator').classList.remove('active', 'completed');
-            document.getElementById('line1').classList.remove('active');
-            document.getElementById('line2').classList.remove('active');
-
-
+            // Navigate back to step 1 state
+            navigateTo({ page: 'step1' });
         }
+
     </script>
-    </body>
+
+</body>
 </html>
