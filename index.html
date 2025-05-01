@@ -187,7 +187,8 @@
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="folder" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5C4 3.89543 4.89543 3 6 3H12M12 3H18C19.1046 3 20 3.89543 20 5V19M12 3V19" />
+                             <rect x="4" y="3" width="16" height="18" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+                             <line x1="12" y1="3" x2="12" y2="21" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
                          </svg>
                     </div>
                     <h4 class="font-semibold text-center">folders</h4>
@@ -353,17 +354,18 @@
                     <div><label for="forsalesign-website" class="block mb-2 font-semibold text-gray-700">website (optional)</label><input type="url" id="forsalesign-website" name="website" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 </div>
                 <div class="mt-6">
-                      <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
-                      <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required>
-                         <option value="3">3 signs - $243.02</option>
-                         <option value="4">4 signs - $319.54</option>
-                         <option value="5">5 signs - $384.02</option>
-                         <option value="6">6 signs - $476.26</option>
-                         <option value="7">7 signs - $547.50</option>
-                         <option value="8">8 signs - $619.44</option>
-                         <option value="9">9 signs - $693.42</option>
-                         <option value="10">10 signs - $700.24</option>
-                       </select>
+                    <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
+                    <select name="quantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg md:w-1/2" id="forsalesign-quantity" required>
+                        <option value="3">3 signs - $243.02</option>
+                        <option value="4">4 signs - $319.54</option>
+                        <option value="5">5 signs - $384.02</option>
+                        <option value="6">6 signs - $476.26</option>
+                        <option value="7">7 signs - $547.50</option>
+                        <option value="8">8 signs - $619.44</option>
+                        <option value="9">9 signs - $693.42</option>
+                        <option value="10">10 signs - $700.24</option>
+                    </select>
+                     <p class="text-xs text-gray-500 mt-1">prices may shift slightly due to daily shipping costs changes.</p>
                  </div>
                 <div class="mt-6"><label for="forsalesign-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="forsalesign-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
@@ -516,11 +518,7 @@
             document.querySelectorAll('label[for]').forEach(label => {
                 label.addEventListener('click', function(e) {
                     const inputElement = document.getElementById(this.getAttribute('for'));
-                    // Prevent default label behavior if it focuses input, avoids double focus/click issues
-                    if (inputElement) {
-                       // e.preventDefault(); // Optional: test if needed
-                       inputElement.focus();
-                    }
+                    if (inputElement) inputElement.focus();
                 });
             });
 
@@ -579,7 +577,7 @@
              }
 
              const backSideContainer = document.getElementById('back-side-container');
-             if (backSideContainer) backSideContainer.classList.add('hidden');
+             if (backSideContainer) backSideContainer.classList.add('hidden'); // Hide by default
 
             switch (state.page) {
                 case 'step1':
@@ -609,7 +607,7 @@
                                  // Restore checked state based on form data if needed, or rely on browser cache
                                  const sidesDouble = document.getElementById('sides-double');
                                  if (sidesDouble && sidesDouble.checked) {
-                                     toggleBackSideText();
+                                     toggleBackSideText(); // Re-show if navigating back/forward
                                  }
                              }
                         } else {
@@ -727,7 +725,7 @@
         }
 
         function sendEmail(templateParams, originMaterial) {
-            // EmailJS IDs - Kept Key as requested, replace others if needed
+             // EmailJS IDs - Kept Key as requested, replace others if needed
             const serviceID = 'default_service';
             const templateID = 'marketing_request'; // Replace with your template ID!
             console.log("Sending email with params:", templateParams);
