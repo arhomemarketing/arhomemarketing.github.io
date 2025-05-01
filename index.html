@@ -205,12 +205,11 @@
 
                 <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="forsalesign" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" style="color: var(--primary);">
-                           <rect x="4" y="2" width="2" height="20" fill="currentColor"/>
-                           <rect x="4" y="2" width="16" height="2" fill="currentColor"/>
-                           <circle cx="8" cy="5.5" r="1" stroke="currentColor" stroke-width="1" fill="white"/>
-                           <circle cx="16" cy="5.5" r="1" stroke="currentColor" stroke-width="1" fill="white"/>
-                           <rect x="7" y="7" width="12" height="12" stroke="currentColor" fill="white" stroke-width="1.5" rx="1"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
+                           <rect x="6" y="3" width="12" height="18" rx="1" />
+                           <line x1="8" y1="7" x2="16" y2="7" stroke-width="1.5" />
+                           <line x1="8" y1="11" x2="16" y2="11" stroke-width="1.5" />
+                           <line x1="8" y1="15" x2="16" y2="15" stroke-width="1.5" />
                         </svg>
                     </div>
                     <h4 class="font-semibold text-center">for sale signs</h4>
@@ -257,7 +256,6 @@
 
         <div id="flyer-step2" class="step-content hidden">
             <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--primary);">step 2: choose your flyer type</h3>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-listed" onclick="selectFlyerType(this)">
                      <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
@@ -267,7 +265,6 @@
                      </div>
                      <h4 class="font-semibold text-center">just listed</h4>
                  </div>
-
                 <div class="flyer-type-card p-4 rounded-lg shadow-md bg-white" data-flyer-type="just-sold" onclick="selectFlyerType(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
@@ -279,7 +276,6 @@
                     <h4 class="font-semibold text-center">just sold</h4>
                 </div>
             </div>
-
             <div class="flex justify-between mt-8">
                 <button id="flyer-step2-back" class="btn-secondary px-6 py-2 rounded-lg font-semibold" onclick="goBack()">back</button>
             </div>
@@ -588,51 +584,36 @@
         // --- UI Update Function ---
         function updateUI(state) {
             console.log("Updating UI for state:", state);
-            // Hide all step content first
             document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
-
-            // Reset indicators and lines
             Object.values(stepIndicators).forEach(ind => ind.classList.remove('active', 'completed'));
             Object.values(stepLines).forEach(line => line.classList.remove('active'));
-
-            // Reset card selections visually
             document.querySelectorAll('.material-card.selected').forEach(c => c.classList.remove('selected'));
             document.querySelectorAll('.flyer-type-card.selected').forEach(c => c.classList.remove('selected'));
 
-            // Set current selections based on state
             currentMaterial = state.material || null;
             currentFlyerType = state.flyerType || null;
 
-            // Re-select cards based on current state before showing divs
-             if (currentMaterial) {
-                document.querySelector(`.material-card[data-material="${currentMaterial}"]`)?.classList.add('selected');
-            }
-             if (currentFlyerType) {
+            if (currentMaterial) document.querySelector(`.material-card[data-material="${currentMaterial}"]`)?.classList.add('selected');
+            if (currentFlyerType) {
                  document.querySelector(`.flyer-type-card[data-flyer-type="${currentFlyerType}"]`)?.classList.add('selected');
-                 // Ensure hidden input is also updated when restoring state
                  const flyerTypeInput = document.getElementById('flyer-type-input');
                  if (flyerTypeInput) flyerTypeInput.value = currentFlyerType;
              } else {
-                  // Clear hidden input if no flyer type in state (relevant when navigating back)
                  const flyerTypeInput = document.getElementById('flyer-type-input');
                  if (flyerTypeInput) flyerTypeInput.value = '';
              }
 
-
-            // Show the correct step div and update indicators
             switch (state.page) {
                 case 'step1':
                     step1Div.classList.remove('hidden');
                     stepIndicators[1].classList.add('active');
                     break;
-
                 case 'flyerTypeSelection':
                     flyerStep2Div.classList.remove('hidden');
                     stepIndicators[1].classList.add('completed');
                     stepIndicators[2].classList.add('active');
                     stepLines[1].classList.add('active');
                     break;
-
                 case 'detailsForm':
                     stepIndicators[1].classList.add('completed');
                     stepLines[1].classList.add('active');
@@ -645,33 +626,31 @@
                         const formDiv = document.getElementById(`${state.material}-step2`);
                         if (formDiv) {
                             formDiv.classList.remove('hidden');
-                            stepIndicators[2].classList.add('active'); // 2 steps shown for non-flyers
+                            stepIndicators[2].classList.add('active');
                         } else {
                              console.error(`Details form not found for material: ${state.material}`);
-                             navigateTo({ page: 'step1'}); // Fallback
+                             navigateTo({ page: 'step1'});
                         }
                     } else {
                          console.error("Details form requested without material type.");
-                         navigateTo({ page: 'step1'}); // Fallback
+                         navigateTo({ page: 'step1'});
                     }
                     break;
-
                 case 'success':
                     successDiv.classList.remove('hidden');
                     stepIndicators[1].classList.add('completed');
-                    stepLines[1].classList.add('active'); // Or .completed if you style it
+                    stepLines[1].classList.add('active');
                      if(state.originMaterial === 'flyer') {
                          stepIndicators[2].classList.add('completed');
-                         stepLines[2].classList.add('active'); // Or .completed
+                         stepLines[2].classList.add('active');
                          stepIndicators[3].classList.add('completed');
                      } else {
                         stepIndicators[2].classList.add('completed');
                      }
                     break;
-
                 default:
                     console.error("Unknown state:", state);
-                    step1Div.classList.remove('hidden'); // Fallback to step 1
+                    step1Div.classList.remove('hidden');
                     stepIndicators[1].classList.add('active');
                     break;
             }
@@ -688,7 +667,6 @@
 
         function selectFlyerType(card) {
             const flyerType = card.getAttribute('data-flyer-type');
-            // Ensure currentMaterial is 'flyer' before navigating
             const nextState = { page: 'detailsForm', material: 'flyer', flyerType: flyerType };
             navigateTo(nextState);
         }
@@ -720,8 +698,7 @@
             if (!form.checkValidity()) { form.reportValidity(); return; }
             showLoadingOverlay();
             const templateParams = Object.fromEntries(new FormData(form).entries());
-            // Ensure flyerType is included if it got lost somehow (should be in hidden input)
-             templateParams.flyerType = templateParams.flyerType || currentFlyerType || 'unknown';
+            templateParams.flyerType = templateParams.flyerType || currentFlyerType || 'unknown';
             sendEmail(templateParams, 'flyer');
         }
 
@@ -730,7 +707,6 @@
             if (formId === 'pen-form') validatePenOptions();
             if (!form.checkValidity()) { form.reportValidity(); return; }
             showLoadingOverlay();
-
             const formData = new FormData(form);
             const templateParams = {};
             const penOptions = [];
@@ -744,13 +720,9 @@
         }
 
         function sendEmail(templateParams, originMaterial) {
-            // IMPORTANT: Replace placeholders with your actual EmailJS info
             const serviceID = 'YOUR_SERVICE_ID'; // Replace!
             const templateID = 'YOUR_TEMPLATE_ID'; // Replace!
-
-             // Log params before sending for debugging
             console.log("Sending email with params:", templateParams);
-
              emailjs.send(serviceID, templateID, templateParams)
                 .then(response => {
                     console.log('SUCCESS!', response.status, response.text);
@@ -759,13 +731,9 @@
                 }, error => {
                     console.log('FAILED...', error);
                     hideLoadingOverlay();
-                    // Provide more specific error if possible
                     let errorMsg = 'There was an error submitting your request. Please check your details and try again.';
-                    if (error && error.text) {
-                         errorMsg += `\nError details: ${error.text}`;
-                    } else if (error) {
-                        errorMsg += `\nError details: ${JSON.stringify(error)}`;
-                    }
+                    if (error && error.text) errorMsg += `\nError details: ${error.text}`;
+                    else if (error) errorMsg += `\nError details: ${JSON.stringify(error)}`;
                     alert(errorMsg);
                 });
         }
@@ -774,21 +742,16 @@
         function hideLoadingOverlay() { loadingOverlay.classList.add('hidden'); }
 
         function startNewRequest() {
-            // Reset all forms within the container
             document.querySelectorAll('.container form').forEach(form => form.reset());
-
-             // Explicitly handle edge cases like EDDM checkbox/input reset
-             const eddmZipContainer = document.getElementById('eddm-zip-container');
-             if (eddmZipContainer) eddmZipContainer.classList.add('hidden');
-             const eddmZipInput = document.getElementById('flyer-eddmZip');
-             if (eddmZipInput) eddmZipInput.required = false;
-             // Reset pen validation state
-             const penValidationInput = document.getElementById('pen-options-validation');
-             if (penValidationInput) penValidationInput.value = '';
-             const penCheckboxes = document.querySelectorAll('input[name="penOptions"]');
-             penCheckboxes.forEach(cb => cb.setCustomValidity('')); // Clear any lingering custom validity
-
-            navigateTo({ page: 'step1' }); // Navigate back to step 1 state
+            const eddmZipContainer = document.getElementById('eddm-zip-container');
+            if (eddmZipContainer) eddmZipContainer.classList.add('hidden');
+            const eddmZipInput = document.getElementById('flyer-eddmZip');
+            if (eddmZipInput) eddmZipInput.required = false;
+            const penValidationInput = document.getElementById('pen-options-validation');
+            if (penValidationInput) penValidationInput.value = '';
+            const penCheckboxes = document.querySelectorAll('input[name="penOptions"]');
+            penCheckboxes.forEach(cb => cb.setCustomValidity(''));
+            navigateTo({ page: 'step1' });
         }
     </script>
 </body>
