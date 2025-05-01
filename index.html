@@ -144,16 +144,15 @@
                  <div class="material-card p-4 rounded-lg shadow-md bg-white" data-material="listingbrochure" onclick="selectMaterial(this)">
                     <div class="bg-blue-50 p-4 rounded-lg mb-3 flex items-center justify-center h-32">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--primary);">
-                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5C4 3.89543 4.89543 3 6 3H12M12 3H18C19.1046 3 20 3.89543 20 5V19M12 3V19" />
-                             <line x1="5" y1="7" x2="11" y2="7" stroke-width="1"/>
-                             <line x1="5" y1="10" x2="11" y2="10" stroke-width="1"/>
-                             <line x1="5" y1="13" x2="11" y2="13" stroke-width="1"/>
-                             <line x1="5" y1="16" x2="11" y2="16" stroke-width="1"/>
-                             <line x1="13" y1="7" x2="19" y2="7" stroke-width="1"/>
-                             <line x1="13" y1="10" x2="19" y2="10" stroke-width="1"/>
-                             <line x1="13" y1="13" x2="19" y2="13" stroke-width="1"/>
-                             <line x1="13" y1="16" x2="19" y2="16" stroke-width="1"/>
-                         </svg>
+                            <rect x="6" y="3" width="12" height="18" rx="1" />
+                            <path d="M12 3 L12 21" />
+                            <path d="M9 7 L11 7" />
+                            <path d="M9 11 L11 11" />
+                            <path d="M9 15 L11 15" />
+                            <path d="M13 7 L15 7" />
+                            <path d="M13 11 L15 11" />
+                            <path d="M13 15 L15 15" />
+                        </svg>
                     </div>
                     <h4 class="font-semibold text-center">listing brochures</h4>
                 </div>
@@ -577,7 +576,7 @@
             document.querySelectorAll('.flyer-type-card.selected').forEach(c => c.classList.remove('selected'));
 
             currentMaterial = state.material || null;
-            currentFlyerType = state.flyerType || null; // flyerType applies to Postcards now
+            currentFlyerType = state.flyerType || null;
 
             if (currentMaterial) document.querySelector(`.material-card[data-material="${currentMaterial}"]`)?.classList.add('selected');
             if (currentFlyerType) {
@@ -590,14 +589,14 @@
              }
 
              const backSideContainer = document.getElementById('back-side-container');
-             if (backSideContainer) backSideContainer.classList.add('hidden'); // Hide by default
+             if (backSideContainer) backSideContainer.classList.add('hidden');
 
             switch (state.page) {
                 case 'step1':
                     step1Div.classList.remove('hidden');
                     stepIndicators[1].classList.add('active');
                     break;
-                case 'flyerTypeSelection': // Postcard type selection
+                case 'flyerTypeSelection':
                     flyerStep2Div.classList.remove('hidden');
                     stepIndicators[1].classList.add('completed');
                     stepIndicators[2].classList.add('active');
@@ -606,22 +605,21 @@
                 case 'detailsForm':
                     stepIndicators[1].classList.add('completed');
                     stepLines[1].classList.add('active');
-                    if (state.material === 'flyer') { // Postcard details
+                    if (state.material === 'flyer') {
                         flyerStep3Div.classList.remove('hidden');
                         stepIndicators[2].classList.add('completed');
                         stepIndicators[3].classList.add('active');
                         stepLines[2].classList.add('active');
-                    } else if (state.material) { // Other material forms
+                    } else if (state.material) {
                         const formDiv = document.getElementById(`${state.material}-step2`);
                         if (formDiv) {
                             formDiv.classList.remove('hidden');
                             stepIndicators[2].classList.add('active');
                              if (state.material === 'businesscard') {
-                                 // Update BC dropdown when showing this form
                                  const materialSelect = document.getElementById('card-material');
                                  const sidesRadio = document.querySelector('input[name="cardSides"]:checked') || document.getElementById('sides-one');
                                  updateBusinessCardQuantityOptions(materialSelect.value, sidesRadio.value);
-                                 toggleBackSideText(); // Ensure back side visibility matches radio state
+                                 toggleBackSideText();
                              }
                         } else {
                              console.error(`Details form not found for material: ${state.material}`);
@@ -636,11 +634,11 @@
                     successDiv.classList.remove('hidden');
                     stepIndicators[1].classList.add('completed');
                     stepLines[1].classList.add('active');
-                     if(state.originMaterial === 'flyer') { // If came from Postcard flow (3 steps)
+                     if(state.originMaterial === 'flyer') {
                          stepIndicators[2].classList.add('completed');
                          stepLines[2].classList.add('active');
                          stepIndicators[3].classList.add('completed');
-                     } else { // If came from other flows (2 steps visually)
+                     } else {
                         stepIndicators[2].classList.add('completed');
                      }
                     break;
@@ -655,14 +653,13 @@
         // Event Handlers / Navigation / UI Toggles
         function selectMaterial(card) {
             const material = card.getAttribute('data-material');
-            // 'flyer' is Postcards now
             let nextState = (material === 'flyer')
                 ? { page: 'flyerTypeSelection', material: material }
                 : { page: 'detailsForm', material: material };
             navigateTo(nextState);
         }
 
-        function selectFlyerType(card) { // For Postcards
+        function selectFlyerType(card) {
             const flyerType = card.getAttribute('data-flyer-type');
             const nextState = { page: 'detailsForm', material: 'flyer', flyerType: flyerType };
             navigateTo(nextState);
@@ -696,21 +693,17 @@
              }
          }
 
-         // Update Business Card Quantity Dropdown based on selections
           function updateBusinessCardQuantityOptions(selectedMaterial, selectedSides) {
              const quantitySelect = document.getElementById('card-quantity');
              if (!quantitySelect) return;
 
              const sideKey = selectedSides || 'one';
              const prices = businessCardPricing[sideKey]?.[selectedMaterial];
+             const currentQuantityValue = quantitySelect.value; // Preserve selection
 
-             // Store current selected value if possible
-              const currentQuantityValue = quantitySelect.value;
-
-             quantitySelect.innerHTML = ''; // Clear existing options
+             quantitySelect.innerHTML = ''; // Clear
 
              if (prices) {
-                 // Add a default placeholder option
                  const placeholderOption = document.createElement('option');
                  placeholderOption.value = "";
                  placeholderOption.textContent = "select quantity";
@@ -726,13 +719,11 @@
                  }
                   quantitySelect.disabled = false;
 
-                  // Try to restore previous selection if it's still valid
                   if (quantitySelect.querySelector(`option[value="${currentQuantityValue}"]`)) {
                       quantitySelect.value = currentQuantityValue;
                   } else {
-                      quantitySelect.value = ""; // Select placeholder if previous value invalid
+                      quantitySelect.value = "";
                   }
-
              } else {
                  console.warn(`Pricing not found for material: ${selectedMaterial}, sides: ${sideKey}`);
                  const disabledOption = document.createElement('option');
@@ -744,7 +735,6 @@
              }
          }
 
-        // Wrapper function for onchange events to call the update function
         function handleCardSpecChange() {
             const materialSelect = document.getElementById('card-material');
             const sidesRadio = document.querySelector('input[name="cardSides"]:checked');
@@ -752,9 +742,8 @@
             const selectedSides = sidesRadio ? sidesRadio.value : 'one';
 
             updateBusinessCardQuantityOptions(selectedMaterial, selectedSides);
-            toggleBackSideText(); // Also handles visibility based on sides choice
+            toggleBackSideText();
         }
-
 
         function validatePenOptions() {
             const checkboxes = document.querySelectorAll('input[name="penOptions"]:checked');
@@ -762,7 +751,6 @@
             validationInput.value = checkboxes.length > 0 ? 'valid' : '';
             validationInput.setCustomValidity(checkboxes.length > 0 ? '' : 'please select at least one option for the pen.');
         }
-
 
         // Form Submission
         function submitFlyerForm() { // For Postcards
@@ -793,31 +781,26 @@
             if (penOptions.length > 0) templateParams['penOptions'] = penOptions.join(', ');
             if (formId === 'businesscard-form' && templateParams.cardSides === 'one') delete templateParams.backSideText;
 
-            // Add selected quantity/price text to business card submission
              if (formId === 'businesscard-form') {
                  const quantitySelect = document.getElementById('card-quantity');
-                 if (quantitySelect.selectedIndex > 0) { // Ensure it's not the placeholder
+                 if (quantitySelect.selectedIndex > 0) {
                     templateParams['selectedQuantityAndPrice'] = quantitySelect.options[quantitySelect.selectedIndex].text;
-                 } else {
-                    templateParams['selectedQuantityAndPrice'] = 'N/A - Quantity not selected'; // Or handle error
-                 }
+                 } else { templateParams['selectedQuantityAndPrice'] = 'N/A'; }
              }
-             // Add selected quantity/price text to for sale sign submission
               if (formId === 'forsalesign-form') {
                  const quantitySelect = document.getElementById('forsalesign-quantity');
-                 if (quantitySelect.selectedIndex >= 0) { // No placeholder here
+                 if (quantitySelect.selectedIndex >= 0) {
                     templateParams['selectedQuantityAndPrice'] = quantitySelect.options[quantitySelect.selectedIndex].text;
                  }
              }
-
 
             const materialType = templateParams.materialType || formId.replace('-form','').replace('-step2','');
             sendEmail(templateParams, materialType);
         }
 
         function sendEmail(templateParams, originMaterial) {
-             // EmailJS IDs - Kept Key as requested, replace others if needed
-            const serviceID = 'default_service'; // Replace if needed!
+            // EmailJS IDs - Kept Key as requested, replace others if needed
+            const serviceID = 'default_service';
             const templateID = 'marketing_request'; // Replace with your template ID!
             console.log("Sending email with params:", templateParams);
              emailjs.send(serviceID, templateID, templateParams)
