@@ -304,7 +304,7 @@
                 </div>
 
                 <div class="mt-6"><label for="card-additionalInstructions" class="block mb-2 font-semibold text-gray-700">additional instructions</label><textarea id="card-additionalInstructions" name="additionalInstructions" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-24"></textarea></div>
-                <div class="marketing-note mt-6"><p>our marketing concierge will email you a quote and design proof.</p></div>
+                 <div class="marketing-note mt-6"><p>our marketing concierge will email you a design proof.</p></div>
                 <input type="hidden" name="materialType" value="businesscard">
             </form>
             <div class="flex justify-between mt-8">
@@ -351,7 +351,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="forsalesign-email" class="block mb-2 font-semibold text-gray-700">email address</label><input type="email" id="forsalesign-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
-                    <div><label for="forsalesign-website" class="block mb-2 font-semibold text-gray-700">website (optional)</label><input type="url" id="forsalesign-website" name="website" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                    <div><label for="forsalesign-website" class="block mb-2 font-semibold text-gray-700">website (optional)</label><input type="text" id="forsalesign-website" name="website" placeholder="example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 </div>
                 <div class="mt-6">
                       <label for="forsalesign-quantity" class="block mb-2 font-semibold text-gray-700">quantity (minimum of 3)</label>
@@ -456,7 +456,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div><label for="folder-email" class="block mb-2 font-semibold text-gray-700">email</label><input type="email" id="folder-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
-                    <div><label for="folder-website" class="block mb-2 font-semibold text-gray-700">website (if you have one)</label><input type="url" id="folder-website" name="website" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                    <div><label for="folder-website" class="block mb-2 font-semibold text-gray-700">website (if you have one)</label><input type="text" id="folder-website" name="website" placeholder="example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 </div>
                  <div class="mt-6">
                      <label class="block mb-2 font-semibold text-gray-700">use your photo?</label>
@@ -503,8 +503,8 @@
 
         // DOM Elements
         const step1Div = document.getElementById('step1');
-        const flyerStep2Div = document.getElementById('flyer-step2'); // Postcard type selection
-        const flyerStep3Div = document.getElementById('flyer-step3'); // Postcard details
+        const flyerStep2Div = document.getElementById('flyer-step2');
+        const flyerStep3Div = document.getElementById('flyer-step3');
         const successDiv = document.getElementById('success-message');
         const loadingOverlay = document.getElementById('loading-overlay');
         const stepIndicators = { 1: document.getElementById('step1-indicator'), 2: document.getElementById('step2-indicator'), 3: document.getElementById('step3-indicator') };
@@ -699,9 +699,9 @@
 
              const sideKey = selectedSides || 'one';
              const prices = businessCardPricing[sideKey]?.[selectedMaterial];
-             const currentQuantityValue = quantitySelect.value; // Preserve selection
+             const currentQuantityValue = quantitySelect.value;
 
-             quantitySelect.innerHTML = ''; // Clear
+             quantitySelect.innerHTML = '';
 
              if (prices) {
                  const placeholderOption = document.createElement('option');
@@ -753,7 +753,7 @@
         }
 
         // Form Submission
-        function submitFlyerForm() { // For Postcards
+        function submitFlyerForm() {
             const form = document.getElementById('flyer-form');
             if (!form.checkValidity()) { form.reportValidity(); return; }
             showLoadingOverlay();
@@ -776,6 +776,10 @@
             const penOptions = [];
             for (let [key, value] of formData.entries()) {
                 if (key === 'penOptions') penOptions.push(value);
+                 // Prepend scheme to website if missing
+                 else if (key === 'website' && value && typeof value === 'string' && value.trim() !== '' && !value.match(/^[a-zA-Z]+:\/\//)) {
+                     templateParams[key] = 'https://' + value.trim();
+                 }
                 else templateParams[key] = value;
             }
             if (penOptions.length > 0) templateParams['penOptions'] = penOptions.join(', ');
@@ -799,7 +803,7 @@
         }
 
         function sendEmail(templateParams, originMaterial) {
-            // EmailJS IDs - Kept Key as requested, replace others if needed
+             // EmailJS IDs - Kept Key as requested, replace others if needed
             const serviceID = 'default_service';
             const templateID = 'marketing_request'; // Replace with your template ID!
             console.log("Sending email with params:", templateParams);
